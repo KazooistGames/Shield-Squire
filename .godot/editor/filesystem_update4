@@ -7,3 +7,5 @@ res://Scenes/Guy/Guy.gd
 res://HMI.gd
 res://Scenes/Guy/animated_sprite_2d.gd
 res://Scenes/Guy/area_2d.gd
+res://Scenes/Guy/sprite_2d.gd
+res://Scenes/Guy/custom_sprite_sheet_animator.gd

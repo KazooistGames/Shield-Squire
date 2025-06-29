@@ -8,7 +8,6 @@ const default_run_frames_per_second := 15
 @onready var parent : CharacterBody2D = get_parent()
 
 
-
 func _ready() -> void:
 	
 	play()
@@ -19,7 +18,9 @@ func _ready() -> void:
 func _process(delta : float) -> void:
 	
 	match(parent.state):
+		
 		parent.State.ready:
+			
 			if not parent.is_on_floor():
 				animation = 'stance'
 			elif parent.velocity.x == 0:
@@ -27,20 +28,21 @@ func _process(delta : float) -> void:
 			else:
 				animation = 'run'
 				flip_h = parent.velocity.x > 0
+				
 		parent.State.charging:
-			animation = 'charge'
-			pass 
+			animation = 'charge' 
+			
 		parent.State.attacking:
 			animation = 'attack'
-			pass
+			
 		parent.State.recovering:
 			animation = 'recover'
-			pass
 		
 	if animation == 'run':
 		speed_scale = abs(parent.velocity.x) / (pixels_per_run_frame  * default_run_frames_per_second)
 	else:
 		speed_scale = 1.0
+	
 
 
 func _handle_animation_looped():
@@ -53,13 +55,3 @@ func _handle_animation_finished():
 	if animation == 'attack':
 		parent.recover()
 		
-		
-func check_collision(collider : CollisionShape2D) -> bool:
-	
-	return false
-	
-
-func _check_pixel_collision(position : Vector2) -> bool:
-	
-	var current_frame : Texture2D = sprite_frames.get_frame_texture(animation, frame)
-	return current_frame._is_pixel_opaque(position.x, position.y)

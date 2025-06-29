@@ -13,6 +13,8 @@ enum State{
 @export var state : State = State.ready
 @export var speed := 75.0
 @export var run_direction := 0.0
+@export var current_frame : Sprite2D = null
+
 @onready var sprites : AnimatedSprite2D = $AnimatedSprite2D
 
 var acceleration := 480.0
@@ -24,6 +26,9 @@ var charge_timer_max := 1.5
 
 
 func _process(delta : float) -> void:
+	
+	if current_frame:
+		print(current_frame.atlas._is_pixel_opaque(0,0))
 	
 	if state == State.charging:
 		charge_timer += delta
@@ -112,3 +117,16 @@ func ready() -> bool:
 		return true
 	else:
 		return false
+		
+		
+func check_frame_collision(shape : Shape2D) -> bool:
+	
+	var bounds : Vector2 = shape.get_rect().size
+	
+	for x in range(bounds.x):
+		
+		if current_frame.is_pixel_opaque(Vector2(x, 0)):
+			return true
+	
+	return false
+	

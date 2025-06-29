@@ -10,10 +10,13 @@ var guys_marked_for_parry : Array[CharacterBody2D] = []
 func _process(delta : float) -> void:
 	
 	match parent.state:
+		
 		parent.State.attacking:
 			_process_attacking(delta)
+			
 		parent.State.recovering:
-			_process_recovering(delta)							
+			_process_recovering(delta)		
+								
 		_:
 			pass
 			
