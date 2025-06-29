@@ -11,17 +11,16 @@ func _process(delta : float) -> void:
 	_movement_inputs(delta)
 	_combat_inputs(delta)
 
-
 func _movement_inputs(_delta : float) -> void:
 
 	if Input.is_action_pressed("Left") and Input.is_action_pressed("Right"):
-		player.set_run_direction(0)
+		player.run_direction = 0
 	elif Input.is_action_pressed("Right"):
-		player.set_run_direction(1)
+		player.run_direction = 1
 	elif Input.is_action_pressed("Left"):
-		player.set_run_direction(-1)
+		player.run_direction = -1
 	else:
-		player.set_run_direction(0)
+		player.run_direction = 0
 
 	if Input.is_action_just_pressed("Up"):
 		player.jump()

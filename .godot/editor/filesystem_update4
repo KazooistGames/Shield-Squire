@@ -5,3 +5,4 @@ res://Scenes/Wallpaper/wallpaper.tscn
 res://Scenes/Guy/Guy.tscn
 res://Scenes/Guy/Guy.gd
 res://HMI.gd
+res://Scenes/Guy/animated_sprite_2d.gd
