@@ -31,8 +31,10 @@ func _movement_inputs(_delta : float) -> void:
 func _combat_inputs(_delta : float) -> void:
 	
 	if Input.is_action_just_pressed("Attack"):
-		player.attack()
-
+		player.charge()
+	elif Input.is_action_just_released("Attack"):
+		player.release()
+		
 func _physics_process(delta):
 
 	var offset_from_target : Vector2 = target_position - position

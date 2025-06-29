@@ -12,7 +12,7 @@ script = ExtResource("1_rcyd8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_rcyd8")
-animation = &"attack"
+animation = &"recover"
 script = ExtResource("3_ifsry")
 
 [node name="feet" type="CollisionShape2D" parent="."]
