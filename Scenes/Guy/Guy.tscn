@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://wo1xj87iyqs1"]
+
+[ext_resource type="Script" uid="uid://b8g5l11p4we4p" path="res://Scenes/Guy/Guy.gd" id="1_rcyd8"]
+[ext_resource type="SpriteFrames" uid="uid://bmugslxji0" path="res://Scenes/Guy/Frames/swordsman.tres" id="2_rcyd8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rcyd8"]
+size = Vector2(8.5, 3)
+
+[node name="Guy" type="CharacterBody2D" groups=["Guy"]]
+script = ExtResource("1_rcyd8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_rcyd8")
+animation = &"swing"
+
+[node name="feet" type="CollisionShape2D" parent="."]
+position = Vector2(0.25, 10)
+shape = SubResource("RectangleShape2D_rcyd8")

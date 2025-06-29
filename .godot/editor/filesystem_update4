@@ -1,2 +1,7 @@
+res://Title.tscn
+res://Scenes/Guy/Frames/swordsman.tres
+res://HMI.tscn
 res://Scenes/Wallpaper/wallpaper.tscn
-res://Scenes/Wallpaper/wallpaper.gd
+res://Scenes/Guy/Guy.tscn
+res://Scenes/Guy/Guy.gd
+res://HMI.gd

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvoldq46v0xyn"]
+
+[ext_resource type="Script" uid="uid://ci6fh2bff5v1d" path="res://HMI.gd" id="1_4rt3p"]
+
+[node name="Hmi" type="Camera2D"]
+script = ExtResource("1_4rt3p")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgbmicstbteog"]
+
+[ext_resource type="PackedScene" uid="uid://cmigagy8anvbt" path="res://Scenes/Wallpaper/wallpaper.tscn" id="1_ax32a"]
+[ext_resource type="PackedScene" uid="uid://wo1xj87iyqs1" path="res://Scenes/Guy/Guy.tscn" id="2_quvj1"]
+[ext_resource type="PackedScene" uid="uid://cvoldq46v0xyn" path="res://HMI.tscn" id="3_quvj1"]
+
+[node name="Title" type="Node2D"]
+
+[node name="Wallpaper" parent="." instance=ExtResource("1_ax32a")]
+
+[node name="Guy" parent="." instance=ExtResource("2_quvj1")]
+position = Vector2(0, 30)
+
+[node name="Hmi" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_quvj1")]
+player = NodePath("../Guy")
