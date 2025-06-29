@@ -19,12 +19,19 @@ var acceleration := 480.0
 var charge_timer := 0.0
 var cooldown_timer := 0.0
 
-var cooldown_to_chare_ratio = 0.5
+var cooldown_to_chare_ratio := 0.5
+var charge_timer_max := 1.5
 
 
 func _process(delta : float) -> void:
+	
 	if state == State.charging:
 		charge_timer += delta
+		
+		if charge_timer >= charge_timer_max:
+			charge_timer = charge_timer_max 
+			release()
+		
 	elif state == State.recovering:
 		cooldown_timer -= delta
 		
@@ -68,7 +75,6 @@ func crouch() -> bool:
 func charge() -> bool:
 
 	if state == State.ready:
-		print('charging')
 		state = State.charging
 		cooldown_timer = 0.0
 		return true
@@ -79,7 +85,6 @@ func charge() -> bool:
 func release() -> bool:
 	
 	if state == State.charging:
-		print('releasing')
 		state = State.attacking
 		cooldown_timer = charge_timer * cooldown_to_chare_ratio
 		sprites.play()
@@ -91,7 +96,6 @@ func release() -> bool:
 func recover() -> bool:
 	
 	if state == State.attacking:
-		print('recovering')
 		state = State.recovering
 		charge_timer = 0.0
 		sprites.play()
@@ -103,7 +107,6 @@ func recover() -> bool:
 func ready() -> bool:
 	
 	if state == State.recovering:
-		print('ready')
 		state = State.ready
 		sprites.play()	
 		return true

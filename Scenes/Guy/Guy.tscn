@@ -1,20 +1,32 @@
-[gd_scene load_steps=5 format=3 uid="uid://wo1xj87iyqs1"]
+[gd_scene load_steps=7 format=3 uid="uid://wo1xj87iyqs1"]
 
 [ext_resource type="Script" uid="uid://b8g5l11p4we4p" path="res://Scenes/Guy/Guy.gd" id="1_rcyd8"]
 [ext_resource type="SpriteFrames" uid="uid://bmugslxji0" path="res://Scenes/Guy/Frames/swordsman.tres" id="2_rcyd8"]
 [ext_resource type="Script" uid="uid://bycfbc5k4rjwh" path="res://Scenes/Guy/animated_sprite_2d.gd" id="3_ifsry"]
+[ext_resource type="Script" uid="uid://bb2v6ohbgegrp" path="res://Scenes/Guy/area_2d.gd" id="4_4q4ne"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rcyd8"]
-size = Vector2(8.5, 3)
+size = Vector2(8, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifsry"]
+size = Vector2(24, 24)
 
 [node name="Guy" type="CharacterBody2D" groups=["Guy"]]
 script = ExtResource("1_rcyd8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_rcyd8")
-animation = &"attack"
+animation = &"stance"
 script = ExtResource("3_ifsry")
 
 [node name="feet" type="CollisionShape2D" parent="."]
-position = Vector2(0.25, 10)
+position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_rcyd8")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("4_4q4ne")
+
+[node name="bounds" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ifsry")

@@ -3,7 +3,7 @@ extends AnimatedSprite2D
 const pixels_per_run_frame := 5
 const default_run_frames_per_second := 15
 
-@export var run_direction := 0.0
+@export var run_direction := 0.
 
 @onready var parent : CharacterBody2D = get_parent()
 
@@ -17,7 +17,6 @@ func _ready() -> void:
 	
 
 func _process(delta : float) -> void:
-	
 	
 	match(parent.state):
 		parent.State.ready:
@@ -52,5 +51,15 @@ func _handle_animation_looped():
 func _handle_animation_finished():
 
 	if animation == 'attack':
-		print('attack anim finished')
 		parent.recover()
+		
+		
+func check_collision(collider : CollisionShape2D) -> bool:
+	
+	return false
+	
+
+func _check_pixel_collision(position : Vector2) -> bool:
+	
+	var current_frame : Texture2D = sprite_frames.get_frame_texture(animation, frame)
+	return current_frame._is_pixel_opaque(position.x, position.y)

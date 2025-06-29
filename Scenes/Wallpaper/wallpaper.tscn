@@ -12,7 +12,7 @@ z_index = -1
 texture = ExtResource("2_xnqu7")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(0, 85)
+position = Vector2(0, 83)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_xnqu7")

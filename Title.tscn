@@ -13,3 +13,7 @@ position = Vector2(0, 30)
 
 [node name="Hmi" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_quvj1")]
 player = NodePath("../Guy")
+
+[node name="Guy2" parent="." instance=ExtResource("2_quvj1")]
+position = Vector2(151, 38)
+state = 2
