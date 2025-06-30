@@ -14,14 +14,7 @@ enum State{
 @export var state : State = State.ready
 @export var HP := 100
 @export var Strength := 100.0
-@export var run_direction := 0.0 :
-	get:
-		return run_direction
-	set(value):
-		run_direction = value
-		
-		if value != 0:
-			facing_direction = value
+@export var left_right := 0
 
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var hitBox : Area2D = $hitBox
@@ -29,6 +22,7 @@ enum State{
 
 var speed := 75.0
 var facing_direction := 1
+var facing_locked := false
 var acceleration := 480.0
 var jump_height = 80
 
@@ -42,6 +36,7 @@ var cooldown_to_charge_ratio := 0.5
 
 signal died
 
+
 func _ready() -> void:
 	
 	hitBox.landed_hit.connect(_handle_hit)
@@ -49,6 +44,11 @@ func _ready() -> void:
 	
 
 func _process(delta : float) -> void:
+	
+	facing_locked = state == State.attacking or state == State.sliding
+	
+	if left_right != 0 and not facing_locked:
+		facing_direction = left_right
 
 	match state:
 		
@@ -58,6 +58,7 @@ func _process(delta : float) -> void:
 			if charge_timer >= charge_timer_max:
 				charge_timer = charge_timer_max 
 				release()
+				
 			elif charge_marked_for_release:
 				release()
 		
@@ -78,16 +79,11 @@ func _physics_process(delta : float) -> void:
 	if not is_on_floor():
 		velocity.y += 980 * delta
 		
-	_apply_acceleration(delta)
-	move_and_slide()
-	
-
-func _apply_acceleration(delta: float):
-	
 	var speed_ratio: float = clamp(1.0 - abs(velocity.x/speed) / 2.0, 0.0, 1.0)
 	var real_accel : float = acceleration * speed_ratio
-	var target_speed = run_direction * speed if state == State.ready else 0
+	var target_speed = left_right * speed if state == State.ready else 0
 	velocity.x = move_toward(velocity.x, target_speed, real_accel * delta)
+	move_and_slide()
 	
 
 func jump() -> bool:

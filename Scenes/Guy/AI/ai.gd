@@ -1,25 +1,25 @@
 extends Node2D
 
-const destination_deadband = 24
-@export var Deadbanded := false
-
 @onready var personality : Area2D = $Personality
 @onready var navigation : Node2D = $Navigation
-@onready var guy = get_parent()
+@onready var me = get_parent()
 
 
 func _ready():
 	
-	personality.Detection_Exceptions.append(guy)
+	personality.Me = me
+	navigation.Me = me
 
 
 func _process(delta):
 	
 	var disposition : Vector2 = personality.Desired_Coordinates - global_position
 	
-	if disposition.length() > destination_deadband:
-		Deadbanded = false
-		guy.run_direction = sign(personality.Desired_Coordinates.x - global_position.x)
-	else:
-		Deadbanded = true
-		guy.run_direction = 0
+	if disposition.length() > personality.destination_deadband:
+		personality.Deadbanded = false
+		me.left_right = sign(personality.Desired_Coordinates.x - global_position.x)
+		
+	elif not personality.Deadbanded:
+		personality.Deadbanded = true
+		me.left_right = 0
+		personality.deadband_enter_action()

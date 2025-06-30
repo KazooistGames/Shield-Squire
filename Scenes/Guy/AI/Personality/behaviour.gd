@@ -7,7 +7,7 @@ extends Node
 @export var Max_Seconds := 0
 @export var Fallback : Node = null
 
-@onready var area : Area2D = get_parent()
+@onready var parent : Area2D = get_parent()
 
 var time_active := 0.0
 
@@ -16,3 +16,8 @@ func _process(delta):
 	
 	time_active += delta
 	
+func deadband_enter_action():
+	pass
+
+func deadband_exit_action():
+	pass

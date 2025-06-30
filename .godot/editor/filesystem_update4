@@ -30,3 +30,4 @@ res://Scenes/Guy/AI/AI.tscn
 res://Scenes/Guy/AI/Personality/behaviour.gd
 res://Scenes/Guy/AI/Personality/fight_behaviour.gd
 res://Scenes/Guy/AI/Navigation/navigation.gd
+res://Scenes/Guy/AI/Personality/behaviour_fight.gd

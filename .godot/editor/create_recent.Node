@@ -1,3 +1,6 @@
+CanvasLayer
+ColorRect
+MarginContainer
 CollisionShape2D
 Area2D
 StaticBody2D
@@ -9,4 +12,3 @@ CollisionPolygon2D
 Camera2D
 SubViewport
 CharacterBody2D
-AnimatedSprite2D

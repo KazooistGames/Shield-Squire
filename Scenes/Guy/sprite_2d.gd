@@ -35,11 +35,12 @@ func _determine_active_frame_texture() -> void:
 
 
 func _determine_active_state() -> void:
+
 	
 	match(parent.state):
 	
 		parent.State.ready:
-			flip_h = parent.run_direction > 0 if parent.run_direction != 0 else flip_h
+			flip_h = parent.facing_direction > 0
 			
 			if not parent.is_on_floor():
 				set_animation_state('stance')
@@ -51,6 +52,7 @@ func _determine_active_state() -> void:
 				active_state.frames_per_second = 18 * speed_ratio
 				
 		parent.State.charging:
+			flip_h = parent.facing_direction > 0
 			set_animation_state('charge')
 			
 		parent.State.attacking:

@@ -1,9 +1,11 @@
 extends Area2D
 
-@export var Active_State : Node = null
-@export var Desired_Coordinates := Vector2.ZERO
-@export var Detection_Exceptions : Array[Node2D] = []
+const destination_deadband = 24
 
+@export var Deadbanded := false
+@export var Desired_Coordinates := Vector2.ZERO
+@export var Me : CharacterBody2D
+@export var Active_State : Node = null
 
 @onready var States = find_children('*_*') #implementation detail: use _ in state nodes w/ behaviour script
 
@@ -42,8 +44,15 @@ func get_current_priority() -> Node:
 func detected_bodies() -> Array[Node2D]:
 	
 	var overlapping_bodies : Array[Node2D] = get_overlapping_bodies()
-	
-	for exception in Detection_Exceptions:
-		overlapping_bodies.erase(exception)
-	
+	overlapping_bodies.erase(Me)
 	return overlapping_bodies
+	
+
+func deadband_enter_action() -> void:
+	
+	Active_State.deadband_enter_action()
+	
+	
+func deadband_exit_action() -> void:
+	
+	Active_State.deadband_exit_action()
