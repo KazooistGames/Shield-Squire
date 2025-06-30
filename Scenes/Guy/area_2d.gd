@@ -12,6 +12,8 @@ signal hit(CharacterBody2D)
 
 func _process(delta : float) -> void:
 	
+	position.x = 6 * parent.facing_direction
+	
 	match parent.state:
 		
 		parent.State.attacking:
@@ -30,12 +32,15 @@ func _process_attacking(delta : float) -> void:
 				
 		for area in colliding_areas:
 			var other_guy : CharacterBody2D = area.get_parent()
-			
+
 			if guys_marked_for_parry.has(other_guy):
 				pass
 				
-			elif other_guy.state == other_guy.State.attacking:
+			elif other_guy.state == other_guy.State.attacking and area.collision_layer == 4:
 				guys_marked_for_parry.append(other_guy)
+				
+				if guys_marked_for_hit.has(other_guy):
+					guys_marked_for_hit.erase(other_guy)
 				
 			elif guys_marked_for_hit.has(other_guy):
 				pass
@@ -46,18 +51,15 @@ func _process_attacking(delta : float) -> void:
 					
 func _process_recovering(delta : float) -> void:
 	
+	
 	for guy in guys_marked_for_hit:
 		
 		if guy.check_sprite_collision(global_position, collider.shape.size):
-			print(guy, ' was just hit')
 			hit.emit(guy)
-		else:
-			print('missed ', guy)
 		
 	guys_marked_for_hit.clear()
 		
 	for guy in guys_marked_for_parry:
-		print(guy, ' was just parried')
 		parried.emit(guy)
 		
 	guys_marked_for_parry.clear()

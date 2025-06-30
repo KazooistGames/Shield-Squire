@@ -11,30 +11,43 @@ enum State{
 	sliding
 }
 
+
+@export var HP := 100
 @export var state : State = State.ready
 @export var speed := 75.0
-@export var run_direction := 0.0
+@export var run_direction := 0.0 :
+	get:
+		return run_direction
+	set(value):
+		run_direction = value
+		
+		if value != 0:
+			facing_direction = value
 
 @onready var sprite : Sprite2D = $Sprite2D
-@onready var area : Area2D = $Area2D
+@onready var hitBox : Area2D = $hitBox
+@onready var hurtBox : Area2D = $hurtBox
 
+var facing_direction := 1
 
 var acceleration := 480.0
 var charge_timer := 0.0
 var cooldown_timer := 0.0
 
-var cooldown_to_chare_ratio := 0.5
+var cooldown_to_charge_ratio := 0.5
 var charge_timer_max := 1.0
+
+signal died
 
 
 func _ready() -> void:
 	
-	area.hit.connect(_handle_hit)
-	area.parried.connect(_handle_parry)
+	hitBox.hit.connect(_handle_hit)
+	hitBox.parried.connect(_handle_parry)
 	
 
 func _process(delta : float) -> void:
-	
+
 	match state:
 		
 		State.charging:
@@ -103,7 +116,7 @@ func release() -> bool:
 	
 	if state == State.charging:
 		state = State.attacking
-		cooldown_timer = charge_timer * cooldown_to_chare_ratio
+		cooldown_timer = charge_timer * cooldown_to_charge_ratio
 		return true
 	else:
 		return false
@@ -128,15 +141,18 @@ func ready() -> bool:
 		return false
 		
 		
-func check_sprite_collision(coordinates : Vector2, bounds : Vector2) -> bool:
+func check_sprite_collision(coordinates : Vector2, bounds : Vector2, offset : Vector2 = Vector2.ZERO) -> bool:
 	
-	var offset : Vector2 = coordinates - global_position
+	var disposition : Vector2 = coordinates - global_position
+	var pixel_coord : Vector2
+	var bound_coord : Vector2 = Vector2.ZERO
 	
 	for y in range(-bounds.y / 2.0, bounds.y / 2.0):
-		
+		bound_coord.y = y
 		for x in range(-bounds.x / 2.0, bounds.x / 2.0):
-
-			if sprite.is_pixel_opaque(Vector2(offset.x + x, offset.y + y)):
+			bound_coord.x = x
+			pixel_coord = disposition + bound_coord + offset
+			if sprite.is_pixel_opaque(pixel_coord):
 				return true
 		
 	return false
@@ -145,16 +161,29 @@ func check_sprite_collision(coordinates : Vector2, bounds : Vector2) -> bool:
 func _handle_hit(guy : CharacterBody2D):
 	
 	var disposition = guy.global_position - global_position
-	var impulse = disposition.normalized() * sqrt(charge_timer) * 100
+	var power = sqrt(charge_timer/charge_timer_max) * 100
+	var impulse = disposition.normalized() * power
 	guy.shove(impulse)
+	guy.damage(power)
 	
 	
 func _handle_parry(guy : CharacterBody2D):
 	
-	pass
+	var disposition = guy.global_position - global_position
+	var impulse = disposition.normalized() * sqrt(charge_timer/charge_timer_max) * 100
+	guy.shove(impulse)
 
 	
 func shove(impulse : Vector2) -> void:
 	
 	velocity += impulse
 	state = State.sliding
+	
+	
+func damage(value : int) -> void:
+	
+	HP -= value
+	
+	if HP <= 0:
+		print(name, ' died')
+		died.emit()

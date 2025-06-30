@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://wo1xj87iyqs1"]
+[gd_scene load_steps=11 format=3 uid="uid://wo1xj87iyqs1"]
 
 [ext_resource type="Script" uid="uid://b8g5l11p4we4p" path="res://Scenes/Guy/Guy.gd" id="1_rcyd8"]
 [ext_resource type="Script" uid="uid://bb2v6ohbgegrp" path="res://Scenes/Guy/area_2d.gd" id="4_4q4ne"]
@@ -12,6 +12,9 @@
 size = Vector2(8, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ifsry"]
+size = Vector2(12, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kgurh"]
 size = Vector2(24, 24)
 
 [node name="Guy" type="CharacterBody2D" groups=["Guy"]]
@@ -21,14 +24,17 @@ script = ExtResource("1_rcyd8")
 [node name="feet" type="CollisionShape2D" parent="."]
 position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_rcyd8")
+debug_color = Color(0.307455, 0.627115, 0, 0.42)
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 4
+[node name="hitBox" type="Area2D" parent="."]
+position = Vector2(6, 0)
+collision_layer = 8
+collision_mask = 12
 script = ExtResource("4_4q4ne")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitBox"]
 shape = SubResource("RectangleShape2D_ifsry")
+debug_color = Color(0.982366, 0.029952, 0.33587, 0.42)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("5_wgbwh")
@@ -69,3 +75,10 @@ frames_per_second = 15
 first_frame_index = 14
 last_frame_index = 14
 looping = false
+
+[node name="hurtBox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
+shape = SubResource("RectangleShape2D_kgurh")
