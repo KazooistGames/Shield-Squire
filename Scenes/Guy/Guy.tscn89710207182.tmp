@@ -17,6 +17,9 @@ size = Vector2(24, 24)
 [node name="Guy" type="CharacterBody2D" groups=["Guy"]]
 collision_layer = 2
 script = ExtResource("1_rcyd8")
+state = null
+speed = null
+run_direction = null
 
 [node name="feet" type="CollisionShape2D" parent="."]
 position = Vector2(0, 10)

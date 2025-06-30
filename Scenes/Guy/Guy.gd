@@ -13,22 +13,18 @@ enum State{
 @export var state : State = State.ready
 @export var speed := 75.0
 @export var run_direction := 0.0
-@export var current_frame : Sprite2D = null
 
-@onready var sprites : AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite : Sprite2D = $Sprite2D
 
 var acceleration := 480.0
 var charge_timer := 0.0
 var cooldown_timer := 0.0
 
 var cooldown_to_chare_ratio := 0.5
-var charge_timer_max := 1.5
+var charge_timer_max := 1.0
 
 
 func _process(delta : float) -> void:
-	
-	if current_frame:
-		print(current_frame.atlas._is_pixel_opaque(0,0))
 	
 	if state == State.charging:
 		charge_timer += delta
@@ -92,7 +88,6 @@ func release() -> bool:
 	if state == State.charging:
 		state = State.attacking
 		cooldown_timer = charge_timer * cooldown_to_chare_ratio
-		sprites.play()
 		return true
 	else:
 		return false
@@ -103,7 +98,6 @@ func recover() -> bool:
 	if state == State.attacking:
 		state = State.recovering
 		charge_timer = 0.0
-		sprites.play()
 		return true
 	else:
 		return false
@@ -113,20 +107,23 @@ func ready() -> bool:
 	
 	if state == State.recovering:
 		state = State.ready
-		sprites.play()	
 		return true
 	else:
 		return false
 		
 		
-func check_frame_collision(shape : Shape2D) -> bool:
+func check_sprite_collision(coordinates : Vector2, bounds : Vector2) -> bool:
 	
-	var bounds : Vector2 = shape.get_rect().size
+	var offset : Vector2 = coordinates - global_position
+	var local_pixel : Vector2
 	
-	for x in range(bounds.x):
+	for y in range(-bounds.y / 2.0, bounds.y / 2.0):
+		for x in range(-bounds.x / 2.0, bounds.x / 2.0):
+			local_pixel = Vector2(offset.x + x, offset.y + y)
+
+			if sprite.is_pixel_opaque(local_pixel):
+				print('hit at pixel: ', local_pixel)
+				return true
 		
-		if current_frame.is_pixel_opaque(Vector2(x, 0)):
-			return true
-	
 	return false
 	
