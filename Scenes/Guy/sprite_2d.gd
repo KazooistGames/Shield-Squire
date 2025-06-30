@@ -56,6 +56,9 @@ func _determine_active_state() -> void:
 
 		parent.State.recovering:
 			set_animation_state('recover')
+			
+		parent.State.sliding:
+			set_animation_state('stance')
 
 
 func set_animation_state(state_name : StringName) -> void:

@@ -6,6 +6,9 @@ extends Area2D
 var guys_marked_for_hit : Array[CharacterBody2D] = []
 var guys_marked_for_parry : Array[CharacterBody2D] = []
 
+signal parried(CharacterBody2D)
+signal hit(CharacterBody2D)
+
 
 func _process(delta : float) -> void:
 	
@@ -47,6 +50,7 @@ func _process_recovering(delta : float) -> void:
 		
 		if guy.check_sprite_collision(global_position, collider.shape.size):
 			print(guy, ' was just hit')
+			hit.emit(guy)
 		else:
 			print('missed ', guy)
 		
@@ -54,5 +58,6 @@ func _process_recovering(delta : float) -> void:
 		
 	for guy in guys_marked_for_parry:
 		print(guy, ' was just parried')
+		parried.emit(guy)
 		
 	guys_marked_for_parry.clear()

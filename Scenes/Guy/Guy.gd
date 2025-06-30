@@ -7,7 +7,8 @@ enum State{
 	ready,
 	charging,
 	attacking,
-	recovering
+	recovering,
+	sliding
 }
 
 @export var state : State = State.ready
@@ -15,6 +16,8 @@ enum State{
 @export var run_direction := 0.0
 
 @onready var sprite : Sprite2D = $Sprite2D
+@onready var area : Area2D = $Area2D
+
 
 var acceleration := 480.0
 var charge_timer := 0.0
@@ -24,20 +27,33 @@ var cooldown_to_chare_ratio := 0.5
 var charge_timer_max := 1.0
 
 
+func _ready() -> void:
+	
+	area.hit.connect(_handle_hit)
+	area.parried.connect(_handle_parry)
+	
+
 func _process(delta : float) -> void:
 	
-	if state == State.charging:
-		charge_timer += delta
+	match state:
 		
-		if charge_timer >= charge_timer_max:
-			charge_timer = charge_timer_max 
-			release()
+		State.charging:
+			charge_timer += delta
+			
+			if charge_timer >= charge_timer_max:
+				charge_timer = charge_timer_max 
+				release()
 		
-	elif state == State.recovering:
-		cooldown_timer -= delta
-		
-		if cooldown_timer <= 0:
-			ready()
+		State.recovering:
+			cooldown_timer -= delta
+			
+			if cooldown_timer <= 0:
+				ready()
+				
+		State.sliding:
+			 
+			if velocity.length() == 0:
+				state = State.ready
 		
 
 func _physics_process(delta : float) -> void:
@@ -97,7 +113,6 @@ func recover() -> bool:
 	
 	if state == State.attacking:
 		state = State.recovering
-		charge_timer = 0.0
 		return true
 	else:
 		return false
@@ -107,6 +122,7 @@ func ready() -> bool:
 	
 	if state == State.recovering:
 		state = State.ready
+		charge_timer = 0.0
 		return true
 	else:
 		return false
@@ -115,15 +131,30 @@ func ready() -> bool:
 func check_sprite_collision(coordinates : Vector2, bounds : Vector2) -> bool:
 	
 	var offset : Vector2 = coordinates - global_position
-	var local_pixel : Vector2
 	
 	for y in range(-bounds.y / 2.0, bounds.y / 2.0):
+		
 		for x in range(-bounds.x / 2.0, bounds.x / 2.0):
-			local_pixel = Vector2(offset.x + x, offset.y + y)
 
-			if sprite.is_pixel_opaque(local_pixel):
-				print('hit at pixel: ', local_pixel)
+			if sprite.is_pixel_opaque(Vector2(offset.x + x, offset.y + y)):
 				return true
 		
 	return false
 	
+
+func _handle_hit(guy : CharacterBody2D):
+	
+	var disposition = guy.global_position - global_position
+	var impulse = disposition.normalized() * sqrt(charge_timer) * 100
+	guy.shove(impulse)
+	
+	
+func _handle_parry(guy : CharacterBody2D):
+	
+	pass
+
+	
+func shove(impulse : Vector2) -> void:
+	
+	velocity += impulse
+	state = State.sliding
