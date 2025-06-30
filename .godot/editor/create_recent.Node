@@ -1,10 +1,12 @@
 CollisionShape2D
 Area2D
+StaticBody2D
 Node2D
+RayCast2D
+Node
 Sprite2D
 CollisionPolygon2D
 Camera2D
 SubViewport
 CharacterBody2D
-StaticBody2D
 AnimatedSprite2D

@@ -1,6 +1,4 @@
-extends Node2D
-
-
+extends Node
 
 @export var sprite_sheet : CompressedTexture2D = null
 @export var playing := false

@@ -7,7 +7,7 @@ const default_run_frames_per_second := 15
 
 @onready var parent : CharacterBody2D = get_parent()
 
-var active_state : Node2D = null
+var active_state : Node = null
 
 signal looped(String)
 signal finished(String)
@@ -39,6 +39,7 @@ func _determine_active_state() -> void:
 	match(parent.state):
 	
 		parent.State.ready:
+			flip_h = parent.run_direction > 0 if parent.run_direction != 0 else flip_h
 			
 			if not parent.is_on_floor():
 				set_animation_state('stance')
@@ -46,7 +47,8 @@ func _determine_active_state() -> void:
 				set_animation_state('stance')
 			else:
 				set_animation_state('run')
-				flip_h = parent.velocity.x > 0
+				var speed_ratio = abs(parent.velocity.x) / (pixels_per_run_frame  * default_run_frames_per_second)
+				active_state.frames_per_second = 18 * speed_ratio
 				
 		parent.State.charging:
 			set_animation_state('charge')

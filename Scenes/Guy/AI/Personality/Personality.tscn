@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ds7osd76gd16t"]
+
+[ext_resource type="Script" uid="uid://de4hdbrtvbst4" path="res://Scenes/Guy/AI/Personality/personality.gd" id="1_wpnd3"]
+[ext_resource type="Script" uid="uid://druadp7jmaggc" path="res://Scenes/Guy/AI/Personality/fight_behaviour.gd" id="2_mompq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1kdm2"]
+radius = 120.0
+
+[node name="Personality" type="Area2D"]
+collision_layer = 32768
+collision_mask = 3854
+script = ExtResource("1_wpnd3")
+
+[node name="Fight_State" type="Node" parent="."]
+script = ExtResource("2_mompq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1kdm2")
+debug_color = Color(0.627451, 0.533333, 0, 0.196078)
