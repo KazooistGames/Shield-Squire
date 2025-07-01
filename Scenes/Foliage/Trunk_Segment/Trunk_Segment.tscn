@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgk4xttwme3wq"]
+
+[ext_resource type="Texture2D" uid="uid://comeot1ww6vaa" path="res://Scenes/Foliage/Trunk_Segment/tree_1.png" id="1_jhhvg"]
+[ext_resource type="Script" uid="uid://cxy5p157duw7j" path="res://Scenes/Foliage/Trunk_Segment/trunk_segment.gd" id="1_xgxjs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uxpll"]
+resource_local_to_scene = true
+size = Vector2(6, 24)
+
+[node name="Trunk_Segment" type="StaticBody2D"]
+collision_layer = 16
+script = ExtResource("1_xgxjs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jhhvg")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_uxpll")
+disabled = true

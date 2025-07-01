@@ -1,13 +1,13 @@
+CollisionShape2D
+StaticBody2D
+Sprite2D
 Node
 CanvasLayer
 ColorRect
 MarginContainer
-CollisionShape2D
 Area2D
-StaticBody2D
 Node2D
 RayCast2D
-Sprite2D
 CollisionPolygon2D
 Camera2D
 SubViewport

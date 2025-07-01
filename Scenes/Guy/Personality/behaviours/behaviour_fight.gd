@@ -6,17 +6,16 @@ extends "res://Scenes/Guy/Personality/behaviours/behaviour.gd"
 func _physics_process(delta) -> void:
 	
 	if Foe:
-		_tango_with_foe()
+		_battle_with_foe()
 	else:
 		Yielding = true
 	
 	_determine_foe()
 
 
-func _tango_with_foe():
+func _battle_with_foe():
 	
 	if personality.Deadbanded:
-		print(personality.Desired_Coordinates, ' ', Foe.global_position)
 		personality.Me.charge()
 		
 

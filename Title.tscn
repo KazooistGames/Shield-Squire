@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgbmicstbteog"]
+[gd_scene load_steps=6 format=3 uid="uid://cgbmicstbteog"]
 
-[ext_resource type="PackedScene" uid="uid://cmigagy8anvbt" path="res://Scenes/wallpaper.tscn" id="1_ax32a"]
-[ext_resource type="PackedScene" uid="uid://db5fff6v2i5p7" path="res://Scenes/Guy/Archetypes/Swordsman.tscn" id="2_quvj1"]
-[ext_resource type="PackedScene" uid="uid://cvoldq46v0xyn" path="res://HMI.tscn" id="3_quvj1"]
+[ext_resource type="PackedScene" uid="uid://cmigagy8anvbt" path="res://Scenes/Wallpaper/wallpaper.tscn" id="1_ax32a"]
+[ext_resource type="PackedScene" uid="uid://db5fff6v2i5p7" path="res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn" id="2_quvj1"]
+[ext_resource type="PackedScene" uid="uid://cvoldq46v0xyn" path="res://Scenes/HMI/HMI.tscn" id="3_quvj1"]
 [ext_resource type="PackedScene" uid="uid://b8xpmmlbv64kh" path="res://Scenes/Guy/Guy.tscn" id="4_e4n62"]
+[ext_resource type="PackedScene" uid="uid://6g65nfclhdfm" path="res://Scenes/Foliage/Tree.tscn" id="5_rg4ux"]
 
 [node name="Title" type="Node2D"]
 
@@ -14,6 +15,10 @@ player = NodePath("../Guy")
 
 [node name="Swordsman" parent="." instance=ExtResource("2_quvj1")]
 position = Vector2(151, 38)
+collision_mask = 1
 state = 2
 
 [node name="Guy" parent="." instance=ExtResource("4_e4n62")]
+
+[node name="Tree" parent="." instance=ExtResource("5_rg4ux")]
+position = Vector2(0, 70)

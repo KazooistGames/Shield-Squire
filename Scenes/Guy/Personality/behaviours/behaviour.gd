@@ -16,8 +16,3 @@ func _process(delta):
 	
 	time_active += delta
 	
-func deadband_enter_action():
-	pass
-
-func deadband_exit_action():
-	pass

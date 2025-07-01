@@ -178,7 +178,7 @@ func _handle_parry(guy : CharacterBody2D):
 	var disposition = guy.global_position - global_position
 	var impulse = disposition.normalized() * 100
 	guy.shove(impulse)
-	guy.cooldown_timer = charge_timer * 2.0
+	guy.cooldown_timer = max(charge_timer * 2.0, guy.cooldown_timer)
 
 	
 func shove(impulse : Vector2) -> void:

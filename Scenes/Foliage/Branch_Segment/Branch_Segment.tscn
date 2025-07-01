@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://comaprbaav402"]
+
+[ext_resource type="Texture2D" uid="uid://p6tcqicabhhx" path="res://Scenes/Foliage/Branch_Segment/branch_1.png" id="1_s1f0l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvhnw"]
+size = Vector2(24, 2)
+
+[node name="Branch_Segment" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_s1f0l")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_tvhnw")
