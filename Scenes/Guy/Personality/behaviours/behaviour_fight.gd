@@ -1,21 +1,22 @@
-extends "res://Scenes/Guy/AI/Personality/behaviour.gd"
+extends "res://Scenes/Guy/Personality/behaviours/behaviour.gd"
 
 @export var Foe : CharacterBody2D = null
 		
 
 func _physics_process(delta) -> void:
 	
-	_determine_foe()
-	
 	if Foe:
 		_tango_with_foe()
 	else:
-		pass
+		Yielding = true
+	
+	_determine_foe()
 
 
 func _tango_with_foe():
 	
 	if personality.Deadbanded:
+		print(personality.Desired_Coordinates, ' ', Foe.global_position)
 		personality.Me.charge()
 		
 

@@ -200,7 +200,6 @@ func damage(value : int) -> void:
 	HP -= value
 	
 	if HP <= 0:
-		print(name, ' died')
 		died.emit()
 
 

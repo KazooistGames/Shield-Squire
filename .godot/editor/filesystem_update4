@@ -31,3 +31,8 @@ res://Scenes/Guy/AI/Personality/behaviour.gd
 res://Scenes/Guy/AI/Personality/fight_behaviour.gd
 res://Scenes/Guy/AI/Navigation/navigation.gd
 res://Scenes/Guy/AI/Personality/behaviour_fight.gd
+res://Scenes/Guy/Personality/behaviour_fight.gd
+res://Scenes/Guy/Personality/personality.gd
+res://Scenes/Guy/Personality/Personality.tscn
+res://Scenes/Guy/Personality/behaviours/behaviour_fight.gd
+res://Scenes/Guy/Personality/Navigation/Navigation.tscn
