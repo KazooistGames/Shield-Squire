@@ -1,36 +1,37 @@
 extends "res://Scenes/Guy/AI/Personality/behaviour.gd"
 
 @export var Foe : CharacterBody2D = null
-
-
-func _process(delta) -> void:
-	
-	if not Foe:
-		pass
-	elif not parent.Deadbanded:
-		pass
-	elif parent.Me.state == parent.Me.State.ready:
-		parent.Me.charge()
+		
 
 func _physics_process(delta) -> void:
 	
+	_determine_foe()
+	
 	if Foe:
-		Desired_Coordinates = Foe.global_position
-		
+		_tango_with_foe()
 	else:
-		Desired_Coordinates = parent.global_position
+		pass
+
+
+func _tango_with_foe():
+	
+	if personality.Deadbanded:
+		personality.Me.charge()
 		
-		for body in parent.detected_bodies():
+
+func _determine_foe():
+	
+	if not Foe:
+		Desired_Coordinates = personality.global_position
+		
+		for body in personality.detected_bodies():
 			
 			if body is CharacterBody2D:
 				Foe = body
-	
-
-
-func deadband_enter_action():
-	parent.Me.charge()
-
-
-func deadband_exit_action():
-	print('fight deadband exited')
-	pass
+				
+	elif not personality.detected_bodies().has(Foe):
+		Foe = null
+		Desired_Coordinates = personality.global_position
+		
+	else:
+		Desired_Coordinates = Foe.global_position

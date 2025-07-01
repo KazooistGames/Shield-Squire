@@ -1,23 +1,23 @@
 extends Area2D
 
-const destination_deadband = 24
+const destination_deadband = 20
 
 @export var Deadbanded := false
 @export var Desired_Coordinates := Vector2.ZERO
 @export var Me : CharacterBody2D
-@export var Active_State : Node = null
+@export var Active_Behaviour : Node = null
 
-@onready var States = find_children('*_*') #implementation detail: use _ in state nodes w/ behaviour script
+@onready var Behaviours = find_children('*_*') #implementation detail: use _ in state nodes w/ behaviour script
 
 
 func _ready() -> void:
 	
-	Active_State = get_current_priority()
+	Active_Behaviour = get_current_priority()
 
 
 func _process(delta : float) -> void:
 	
-	Desired_Coordinates = Active_State.Desired_Coordinates
+	Desired_Coordinates = Active_Behaviour.Desired_Coordinates
 
 
 func get_current_priority() -> Node:
@@ -25,7 +25,7 @@ func get_current_priority() -> Node:
 	var highest_priority_so_far := 0
 	var priority_state : Node = null
 	
-	for state in States:
+	for state in Behaviours:
 		
 		if priority_state == null:
 			highest_priority_so_far = state.process_priority
@@ -48,11 +48,11 @@ func detected_bodies() -> Array[Node2D]:
 	return overlapping_bodies
 	
 
-func deadband_enter_action() -> void:
-	
-	Active_State.deadband_enter_action()
-	
-	
-func deadband_exit_action() -> void:
-	
-	Active_State.deadband_exit_action()
+#func deadband_enter_action() -> void:
+	#
+	#Active_Behaviour.deadband_enter_action()
+	#
+	#
+#func deadband_exit_action() -> void:
+	#
+	#Active_Behaviour.deadband_exit_action()

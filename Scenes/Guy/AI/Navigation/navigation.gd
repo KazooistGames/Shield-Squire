@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var Me : CharacterBody2D
-@export var RayRange := Vector2(240, 240)
+@export var RayRange := Vector2(120, 200)
 @export var Direction := 1
 @export var Deadend := false
 
@@ -19,7 +19,7 @@ func _physics_process(delta : float) -> void:
 		down.global_position.y = point.y - RayRange.y
 		
 	else:
-		down.position.x = across.target_position.x * Me.facing_direction
+		down.position.x = across.target_position.x
 		down.position.y = -RayRange.y/2.0
 	
 	Deadend = _calculate_deadend()

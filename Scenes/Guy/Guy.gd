@@ -24,7 +24,7 @@ var speed := 75.0
 var facing_direction := 1
 var facing_locked := false
 var acceleration := 480.0
-var jump_height = 80
+var jump_height = 75
 
 var charge_timer := 0.0
 var charge_timer_max := 1.0
@@ -32,7 +32,7 @@ var charge_timer_min := 0.25
 var charge_marked_for_release := false #used when guy attempts to swing before min charge is met
 
 var cooldown_timer := 0.0
-var cooldown_to_charge_ratio := 0.5
+var cooldown_to_charge_ratio := 1.0
 
 signal died
 
@@ -70,7 +70,7 @@ func _process(delta : float) -> void:
 				
 		State.sliding:
 			 
-			if velocity.length() == 0:
+			if velocity.x == 0:
 				state = State.ready
 		
 
@@ -79,7 +79,7 @@ func _physics_process(delta : float) -> void:
 	if not is_on_floor():
 		velocity.y += 980 * delta
 		
-	var speed_ratio: float = clamp(1.0 - abs(velocity.x/speed) / 2.0, 0.0, 1.0)
+	var speed_ratio: float = clamp(1.0 - abs(velocity.x/speed), 0.5, 1.0)
 	var real_accel : float = acceleration * speed_ratio
 	var target_speed = left_right * speed if state == State.ready else 0
 	velocity.x = move_toward(velocity.x, target_speed, real_accel * delta)
@@ -167,23 +167,32 @@ func check_sprite_collision(coordinates : Vector2, bounds : Vector2, offset : Ve
 func _handle_hit(guy : CharacterBody2D):
 	
 	var disposition = guy.global_position - global_position
-	var power = charge_timer/charge_timer_max * 100
+	var power = sqrt(charge_timer/charge_timer_max) * 100
 	var impulse = disposition.normalized() * power
 	guy.shove(impulse)
-	guy.damage(power)
+	guy.damage(charge_timer/charge_timer_max * 100)
 	
 	
 func _handle_parry(guy : CharacterBody2D):
 	
 	var disposition = guy.global_position - global_position
-	var impulse = disposition.normalized() * pow(charge_timer/charge_timer_max, 2.0) * 100
+	var impulse = disposition.normalized() * 100
 	guy.shove(impulse)
+	guy.cooldown_timer = charge_timer * 2.0
 
 	
 func shove(impulse : Vector2) -> void:
 	
-	velocity += impulse
-	state = State.sliding
+	if sign(velocity.x) == sign(impulse.x):
+		velocity.x += impulse.x
+	else:
+		velocity.x = impulse.x
+		
+	if sign(velocity.y) == sign(impulse.y):
+		velocity.y += impulse.y
+	else:
+		velocity.y = impulse.y
+	#state = State.sliding
 	
 	
 func damage(value : int) -> void:
@@ -194,6 +203,7 @@ func damage(value : int) -> void:
 		print(name, ' died')
 		died.emit()
 
+
 func is_facing(object : Node2D) -> bool:
 	
 	var disposition = object.global_position - global_position
@@ -201,5 +211,6 @@ func is_facing(object : Node2D) -> bool:
 	
 	
 func turn_around():
+	
 	facing_direction *= -1
 	

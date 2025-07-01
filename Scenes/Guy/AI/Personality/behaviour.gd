@@ -7,7 +7,7 @@ extends Node
 @export var Max_Seconds := 0
 @export var Fallback : Node = null
 
-@onready var parent : Area2D = get_parent()
+@onready var personality : Area2D = get_parent()
 
 var time_active := 0.0
 
