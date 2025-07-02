@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://bkt8a20ec31ev" path="res://Scenes/Guy/Boxes/hurt_box.gd" id="8_bshbx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rcyd8"]
-size = Vector2(8, 3)
+size = Vector2(6, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ifsry"]
 size = Vector2(12, 24)

@@ -19,6 +19,7 @@ collision_mask = 1
 state = 2
 
 [node name="Guy" parent="." instance=ExtResource("4_e4n62")]
+position = Vector2(-100, 0)
 
 [node name="Tree" parent="." instance=ExtResource("5_rg4ux")]
-position = Vector2(0, 70)
+position = Vector2(0, 60)

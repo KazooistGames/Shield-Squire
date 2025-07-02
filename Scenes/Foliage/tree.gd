@@ -29,19 +29,9 @@ func _grow_tree(height) -> bool:
 	
 	for index in range(height):
 			
-		var top : bool = false
-		var bottom : bool = false
-		
-		if Height == 1:
-			top = true
-			bottom = true
-			
-		elif index == Height - 1:
-			top == true
-		
-		elif index == 0:
-			bottom = true
-	
+		var top : bool = index == (height - 1)
+		var bottom : bool = index == 0
+
 		_generate_segment(top, bottom)
 	
 	return true
@@ -50,7 +40,6 @@ func _grow_tree(height) -> bool:
 func _generate_segment(top : bool, bottom : bool) -> bool:
 	
 	var section_index : int
-	
 		
 	if top and bottom:
 		section_index = 0 if randf() > 0.5 else 3
@@ -67,8 +56,7 @@ func _generate_segment(top : bool, bottom : bool) -> bool:
 	var new_segment : StaticBody2D = trunk_segment_prefab.instantiate()
 	new_segment.Section_Index = section_index
 	add_child(new_segment)	
-	
-	print(new_segment, ' ', section_index)
+
 	var vertical_offset = -24 * trunk_segments.size()
 	new_segment.position = Vector2(0, vertical_offset)
 	trunk_segments.append(new_segment)	
