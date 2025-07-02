@@ -15,8 +15,6 @@ player = NodePath("../Guy")
 
 [node name="Swordsman" parent="." instance=ExtResource("2_quvj1")]
 position = Vector2(151, 38)
-collision_mask = 1
-state = 2
 
 [node name="Guy" parent="." instance=ExtResource("4_e4n62")]
 position = Vector2(-100, 0)

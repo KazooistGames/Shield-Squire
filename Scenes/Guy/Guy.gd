@@ -86,7 +86,7 @@ func _physics_process(delta : float) -> void:
 	move_and_slide()
 	
 
-func jump(height : int = 30) -> bool:
+func jump(height : int = 36) -> bool:
 	
 	#if not is_on_floor():
 		#return false

@@ -5,9 +5,10 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tvhnw"]
 resource_local_to_scene = true
-size = Vector2(36, 2)
+size = Vector2(34, 2)
 
 [node name="Branch_Segment" type="StaticBody2D"]
+collision_layer = 16
 script = ExtResource("1_so8oe")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -16,5 +17,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 24, 24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-6, 0)
+position = Vector2(-5, 0)
 shape = SubResource("RectangleShape2D_tvhnw")
+one_way_collision = true

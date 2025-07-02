@@ -9,3 +9,6 @@ res://Scenes/Items/Fruit/Fruit.tscn
 res://Scenes/Items/Fruit/fruit.gd
 res://Scenes/Foliage/limb.gd
 res://Scenes/Foliage/tree.gd
+res://Scenes/Guy/Guy.tscn
+res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn
+res://Scenes/Guy/Guy.gd

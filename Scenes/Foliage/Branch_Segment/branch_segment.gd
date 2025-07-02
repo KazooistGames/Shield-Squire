@@ -9,15 +9,14 @@ enum Section {
 	end = 2,
 }
 
-#@export var Section_Index = 0 :
-	#get:
-		#return Section_Index
-	#set(value):
-		#if set_section(value):
-			#Section_Index = value
+@export var Section_Index = 0 :
+	get:
+		return Section_Index
+	set(value):
+		if set_section(value):
+			Section_Index = value
 			
 @export var Direction := 1
-
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var collider : CollisionShape2D = $CollisionShape2D
 
@@ -40,12 +39,9 @@ func set_section(index, first_segment := false):
 	$Sprite2D.flip_h = Direction == -1
 	
 	if index == Section.end:
-		$CollisionShape2D.shape.size.x = 10
-		$CollisionShape2D.position.x = -6 * sign(Direction)
-		
-	#elif index == Section.base:
-		#$CollisionShape2D.shape.size.x = 34
-		#$CollisionShape2D.position.x = -5 * sign(Direction)
+		$CollisionShape2D.shape.size.x = 8
+		$CollisionShape2D.position.x -= 12 * sign(Direction)
+	
 	else:
 		$CollisionShape2D.shape.size.x = 24
 		$CollisionShape2D.position.x = 0
@@ -55,7 +51,8 @@ func set_section(index, first_segment := false):
 		
 	if first_segment:
 		$CollisionShape2D.shape.size.x += 10
-		$CollisionShape2D.position.x -= 5 * sign(Direction)
+		$CollisionShape2D.position.x -= 4 * sign(Direction)
+		
 	return true
 	
 

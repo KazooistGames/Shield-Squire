@@ -1,3 +1,5 @@
+@tool
+
 extends StaticBody2D
 
 const sprite_dimensions = Vector2(24, 24)
@@ -21,6 +23,7 @@ enum Section {
 
 var limb : Node2D = null
 
+
 func set_section(index):
 	
 	if limb:
@@ -35,7 +38,9 @@ func set_section(index):
 	var h = sprite_dimensions.y
 	$Sprite2D.region_rect = Rect2(x, y, w, h)
 	$Sprite2D.flip_h = randf() > 0.5
-	$CollisionShape2D.disabled = index == Section.canopy 
+	
+	if index == Section.canopy:
+		$CollisionShape2D.disabled = true
 	
 	if index == Section.branch:
 		_attach_limb()
@@ -50,4 +55,4 @@ func _attach_limb():
 	limb.Direction = -1 if $Sprite2D.flip_h else 1
 	add_child(limb)
 	var x_offset = -sprite_dimensions.x if $Sprite2D.flip_h else sprite_dimensions.x
-	limb.position = Vector2(x_offset, 0)
+	limb.position = Vector2(x_offset, 2)
