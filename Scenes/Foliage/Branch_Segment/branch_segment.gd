@@ -3,10 +3,9 @@ extends StaticBody2D
 const sprite_dimensions = Vector2(24, 24)
 
 enum Section {
-	canopy = 0,
-	trunk = 1,
-	branch = 2,
-	stump = 3
+	branch = 0,
+	fruit = 1,
+	end = 2,
 }
 
 @export var Section_Index = 0 :
@@ -31,22 +30,12 @@ func set_section(index):
 	var w = sprite_dimensions.x
 	var h = sprite_dimensions.y
 	$Sprite2D.region_rect = Rect2(x, y, w, h)
-	$Sprite2D.flip_h = randf() > 0.5
+	$Sprite2D.flip_v = randf() > 0.5
 	
 	$CollisionShape2D.disabled = index == 0 
-	
-	if index == Section.branch:
-		_attach_limb()
 	
 	return true
 	
 
-func _attach_limb():	
-	
-	var limb_prefab : PackedScene = load("res://Scenes/Foliage/Limb.tscn")
-	limb = limb_prefab.instantiate()
-	add_child(limb)
-	var x_offset = -sprite_dimensions.x if $Sprite2D.flip_h else sprite_dimensions.x
-	limb.position = Vector2(x_offset, 0)
 	
 	

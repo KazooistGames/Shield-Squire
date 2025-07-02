@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgdp07u11foxe"]
+
+[ext_resource type="Script" uid="uid://bm3ixjwm8l026" path="res://Scenes/Foliage/limb.gd" id="1_qark2"]
+
+[node name="Limb" type="Node2D"]
+script = ExtResource("1_qark2")

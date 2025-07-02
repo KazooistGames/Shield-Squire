@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://comaprbaav402"]
+[gd_scene load_steps=4 format=3 uid="uid://comaprbaav402"]
 
 [ext_resource type="Texture2D" uid="uid://p6tcqicabhhx" path="res://Scenes/Foliage/Branch_Segment/branch_1.png" id="1_s1f0l"]
+[ext_resource type="Script" uid="uid://drmpqwcs4l5u7" path="res://Scenes/Foliage/Branch_Segment/branch_segment.gd" id="1_so8oe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tvhnw"]
 size = Vector2(24, 2)
 
 [node name="Branch_Segment" type="StaticBody2D"]
+script = ExtResource("1_so8oe")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_s1f0l")
