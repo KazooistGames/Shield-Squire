@@ -1,6 +1,7 @@
-CollisionShape2D
-StaticBody2D
 Sprite2D
+CollisionShape2D
+RigidBody2D
+StaticBody2D
 Node
 CanvasLayer
 ColorRect
@@ -11,4 +12,3 @@ RayCast2D
 CollisionPolygon2D
 Camera2D
 SubViewport
-CharacterBody2D

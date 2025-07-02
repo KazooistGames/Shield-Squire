@@ -1,9 +1,9 @@
 
 extends Node2D
 
-const bottom_section_index := 0
+const bottom_section_index := 3
 const limb_section_index := 1
-const top_section_index := 3
+const top_section_index := 0
 
 @export var Height := 0 :
 	get():
@@ -20,7 +20,7 @@ var trunk_segments : Array[StaticBody2D] = []
 func _ready():
 
 	if Height == 0:
-		Height = randi_range(3, 5)
+		Height = randi_range(4, 6)
 		
 		
 func _grow_tree(height) -> bool:
@@ -45,20 +45,21 @@ func _generate_segment(top : bool, bottom : bool) -> bool:
 	var section_index : int
 		
 	if top and bottom:
-		section_index = 0 if randf() > 0.5 else 3
+		section_index = top_section_index if randf() > 0.5 else bottom_section_index
+		
 	
 	elif top:
-		section_index = 0
+		section_index = top_section_index
 	
 	elif bottom:
-		section_index = 3
+		section_index = bottom_section_index
 	
 	else:
 		section_index = randi_range(2, 2)
 	
 	var new_segment : StaticBody2D = trunk_segment_prefab.instantiate()
-	new_segment.Section_Index = section_index
 	add_child(new_segment)	
+	new_segment.Section_Index = section_index
 
 	var vertical_offset = -24 * trunk_segments.size()
 	new_segment.position = Vector2(0, vertical_offset)

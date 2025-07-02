@@ -1,16 +1,12 @@
 
 extends Node2D
 
-const bottom_section_index := 0
-const branch_section_index := 1
-const top_section_index := 3
+const base_section_index = 0
+const fruit_section_index = 1
+const end_section_index = 2
 
-@export var Length := 0 :
-	get():
-		return Length
-	set(value):	
-		if _grow_branch(value):
-			Length = value
+@export var Direction := 1
+
 
 @onready var branch_segment_prefab := preload("res://Scenes/Foliage/Branch_Segment/Branch_Segment.tscn")
 
@@ -19,47 +15,46 @@ var branch_segments : Array[StaticBody2D] = []
 
 func _ready():
 
-	if Length == 0:
-		Length = randi_range(1, 3)
+	_grow_branch(randi_range(1, 2))
 		
 		
-func _grow_branch(height) -> bool:
+func _grow_branch(new_length) -> bool:
 	
 	for segment in branch_segments:
 		segment.queue_free()
 		
 	branch_segments.clear()
 	
-	for index in range(height):		
-		var top : bool = index == (height - 1)
-		var bottom : bool = index == 0
-		_generate_segment(top, bottom)
+	for index in range(new_length):	
+		var base : bool = index == 0	
+		var end : bool = index == (new_length - 1)
+		_generate_segment(base, end)
 	
 	return true
 	
 	
-func _generate_segment(top : bool, bottom : bool) -> bool:
+func _generate_segment(base : bool, end : bool) -> bool:
 	
 	var section_index : int
 		
-	if top and bottom:
-		section_index = 0 if randf() > 0.5 else 3
+	if base and end:
+		section_index = end_section_index
 	
-	elif top:
-		section_index = 0
+	elif base:
+		section_index = base_section_index
 	
-	elif bottom:
-		section_index = 3
+	elif end:
+		section_index = end_section_index
 	
 	else:
-		section_index = randi_range(1, 2)
+		section_index = randi_range(base_section_index, fruit_section_index)
 	
-	var new_segment : StaticBody2D = branch_segment_prefab.instantiate()
-	new_segment.Section_Index = section_index
-	add_child(new_segment)	
+	var new_segment : StaticBody2D = branch_segment_prefab.instantiate()	
+	new_segment.Direction = Direction
+	add_child(new_segment)
+	new_segment.set_section(section_index, base)
 	
-	var horizontal_offset = 24 * branch_segments.size() * sign(position.x)
+	var horizontal_offset = 24 * branch_segments.size() * sign(Direction)
 	new_segment.position = Vector2(horizontal_offset, 0)
 	branch_segments.append(new_segment)	
-	
 	return true

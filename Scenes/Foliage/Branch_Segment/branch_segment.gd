@@ -1,41 +1,70 @@
+@tool
 extends StaticBody2D
 
 const sprite_dimensions = Vector2(24, 24)
 
 enum Section {
-	branch = 0,
+	base = 0,
 	fruit = 1,
 	end = 2,
 }
 
-@export var Section_Index = 0 :
-	get:
-		return Section_Index
-	set(value):
-		if set_section(value):
-			Section_Index = value
+#@export var Section_Index = 0 :
+	#get:
+		#return Section_Index
+	#set(value):
+		#if set_section(value):
+			#Section_Index = value
+			
+@export var Direction := 1
 
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var collider : CollisionShape2D = $CollisionShape2D
 
-var limb : Node2D = null
+var fruit : Node2D = null
 
-func set_section(index):
+
+func set_section(index, first_segment := false):
 	
-	if index * sprite_dimensions.y >= $Sprite2D.texture.get_size().y:
+	if fruit:
+		fruit.queue_free()
+	
+	if index * sprite_dimensions.x >= $Sprite2D.texture.get_size().x:
 		return false
 		
-	var x = 0
-	var y = sprite_dimensions.y * index
+	var x = sprite_dimensions.y * index
+	var y = 0
 	var w = sprite_dimensions.x
 	var h = sprite_dimensions.y
 	$Sprite2D.region_rect = Rect2(x, y, w, h)
-	$Sprite2D.flip_v = randf() > 0.5
+	$Sprite2D.flip_h = Direction == -1
 	
-	$CollisionShape2D.disabled = index == 0 
+	if index == Section.end:
+		$CollisionShape2D.shape.size.x = 10
+		$CollisionShape2D.position.x = -6 * sign(Direction)
+		
+	#elif index == Section.base:
+		#$CollisionShape2D.shape.size.x = 34
+		#$CollisionShape2D.position.x = -5 * sign(Direction)
+	else:
+		$CollisionShape2D.shape.size.x = 24
+		$CollisionShape2D.position.x = 0
 	
+	if index == Section.fruit:
+		_attach_fruit()
+		
+	if first_segment:
+		$CollisionShape2D.shape.size.x += 10
+		$CollisionShape2D.position.x -= 5 * sign(Direction)
 	return true
 	
 
+func _attach_fruit():
+	
+	var fruit_prefab : PackedScene = load("res://Scenes/Items/Fruit/Fruit.tscn")
+	fruit = fruit_prefab.instantiate()
+	add_child(fruit)
+	var y_offset = 8
+	fruit.position = Vector2(-1, y_offset)
 	
 	

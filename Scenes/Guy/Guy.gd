@@ -86,12 +86,12 @@ func _physics_process(delta : float) -> void:
 	move_and_slide()
 	
 
-func jump() -> bool:
+func jump(height : int = 30) -> bool:
 	
-	if not is_on_floor():
-		return false
+	#if not is_on_floor():
+		#return false
 
-	velocity.y = -sqrt(jump_height * 1960)
+	velocity.y = -sqrt(height * 1960)
 	return true
 		
 

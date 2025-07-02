@@ -4,7 +4,8 @@
 [ext_resource type="Script" uid="uid://drmpqwcs4l5u7" path="res://Scenes/Foliage/Branch_Segment/branch_segment.gd" id="1_so8oe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tvhnw"]
-size = Vector2(24, 2)
+resource_local_to_scene = true
+size = Vector2(36, 2)
 
 [node name="Branch_Segment" type="StaticBody2D"]
 script = ExtResource("1_so8oe")
@@ -15,5 +16,5 @@ region_enabled = true
 region_rect = Rect2(0, 0, 24, 24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
+position = Vector2(-6, 0)
 shape = SubResource("RectangleShape2D_tvhnw")
