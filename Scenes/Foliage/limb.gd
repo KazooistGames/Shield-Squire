@@ -41,7 +41,7 @@ func _generate_segment(base : bool, end : bool) -> bool:
 		section_index = end_section_index
 	
 	elif base:
-		section_index = base_section_index
+		section_index = randi_range(base_section_index, fruit_section_index)
 	
 	elif end:
 		section_index = end_section_index

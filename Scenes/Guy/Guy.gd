@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 const pixels_per_run_frame := 5
 const default_run_frames_per_second := 15
+const duck_duration := 0.2
 
 enum State{
 	ready,
@@ -34,6 +35,8 @@ var charge_marked_for_release := false #used when guy attempts to swing before m
 var cooldown_timer := 0.0
 var cooldown_to_charge_ratio := 1.0
 
+var duck_debounce := 0.0
+
 signal died
 
 
@@ -49,6 +52,12 @@ func _process(delta : float) -> void:
 	
 	if left_right != 0 and not facing_locked:
 		facing_direction = left_right
+		
+	if duck_debounce < duck_duration:
+		duck_debounce += delta
+		collision_mask = 1
+	else:
+		collision_mask = 17
 
 	match state:
 		
@@ -88,15 +97,16 @@ func _physics_process(delta : float) -> void:
 
 func jump(height : int = 36) -> bool:
 	
-	#if not is_on_floor():
-		#return false
+	if not is_on_floor():
+		return false
 
+	sap(1)
 	velocity.y = -sqrt(height * 1960)
 	return true
-		
-
-func crouch() -> bool:
 	
+
+func duck() -> bool:
+	duck_debounce = 0.0
 	return false
 	
 	
@@ -107,6 +117,7 @@ func charge() -> bool:
 		cooldown_timer = 0.0
 		charge_timer = 0.0
 		return true
+		
 	else:
 		return false
 
@@ -124,6 +135,7 @@ func release() -> bool:
 		charge_marked_for_release = false
 		state = State.attacking
 		cooldown_timer = charge_timer * cooldown_to_charge_ratio
+		sap(1)
 		return true
 
 
@@ -192,7 +204,7 @@ func shove(impulse : Vector2) -> void:
 		velocity.y += impulse.y
 	else:
 		velocity.y = impulse.y
-	#state = State.sliding
+	
 	
 	
 func damage(value : int) -> void:
@@ -213,3 +225,16 @@ func turn_around():
 	
 	facing_direction *= -1
 	
+	
+func sap(value : float):
+	
+	if Strength <= 0:
+		damage(value)
+		
+	elif value > Strength:
+		var diff = value - Strength
+		Strength = 0
+		damage(diff)
+		
+	else:
+		Strength -= value

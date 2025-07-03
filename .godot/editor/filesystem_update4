@@ -12,3 +12,7 @@ res://Scenes/Foliage/tree.gd
 res://Scenes/Guy/Guy.tscn
 res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn
 res://Scenes/Guy/Guy.gd
+res://Scenes/HMI/HMI.gd
+res://Scenes/HMI/HMI.tscn
+res://Scenes/Guy/Boxes/hit_box.gd
+res://Scenes/Guy/Boxes/hit_box.tscn

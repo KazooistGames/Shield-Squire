@@ -5,6 +5,8 @@ extends Camera2D
 @export var reposition_speed := 10
 
 @onready var hp_bar : ColorRect = $CanvasLayer/hp_bar
+@onready var strength_bar : ColorRect = $CanvasLayer/strength_bar
+
 
 func _process(delta : float) -> void:
 
@@ -27,7 +29,7 @@ func _movement_inputs(_delta : float) -> void:
 	if Input.is_action_just_pressed("Up"):
 		player.jump()
 	elif Input.is_action_just_pressed("Down"):
-		player.crouch()
+		player.duck()
 		
 
 func _combat_inputs(_delta : float) -> void:
@@ -37,6 +39,7 @@ func _combat_inputs(_delta : float) -> void:
 	elif Input.is_action_just_released("Attack"):
 		player.release()
 		
+		
 func _physics_process(delta):
 
 	var offset_from_target : Vector2 = target_position - position
@@ -45,5 +48,7 @@ func _physics_process(delta):
 
 
 func _update_hud(delta):
+	
 	hp_bar.size.x = player.HP
+	strength_bar.size.x = player.Strength
 	

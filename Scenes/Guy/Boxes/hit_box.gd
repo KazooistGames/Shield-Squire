@@ -7,6 +7,7 @@ extends Area2D
 
 var guys_marked_for_hit : Array[CharacterBody2D] = []
 var guys_marked_for_parry : Array[CharacterBody2D] = []
+var items_marked_for_smack : Array[PhysicsBody2D] = []
 
 signal parried(CharacterBody2D)
 signal landed_hit(CharacterBody2D)
@@ -29,20 +30,29 @@ func _process(delta : float) -> void:
 			
 
 func _process_attacking(delta : float) -> void:
-	
-		var colliding_areas : Array[Area2D] = get_overlapping_areas()	
-				
-		for area in colliding_areas:
-			var object = area.get_parent()
+
+	var colliding_areas : Array[Area2D] = get_overlapping_areas()	
+
+	for area in colliding_areas:
+		var object = area.get_parent()
+		
+		if not parent.is_facing(object):
+			pass
+		elif object is CharacterBody2D:
+			_handle_guy_overlap(object, area)
 			
-			if not parent.is_facing(object):
-				pass
-			elif object is CharacterBody2D:
-				_handle_guy_overlap(object, area)
+	var colliding_bodies : Array[Node2D] = get_overlapping_bodies()
+	
+	for body in colliding_bodies:
+		
+		if not parent.is_facing(body):
+			pass
+			
+		elif body.collision_layer & 512 >= 1:
+			_handle_item_overlap(body)
 
 					
 func _process_recovering(delta : float) -> void:
-	
 	
 	for guy in guys_marked_for_hit:
 		
@@ -55,7 +65,15 @@ func _process_recovering(delta : float) -> void:
 		parried.emit(guy)
 		
 	guys_marked_for_parry.clear()
+	
+	for item in items_marked_for_smack:
+		var disposition = (item.global_position - global_position).normalized()
+		var direction = Vector2(sign(disposition.x), -1).normalized()
+		var magnitude = (parent.charge_timer / parent.charge_timer_max) * 100
+		item.smack(direction * magnitude)
 
+	items_marked_for_smack.clear()
+	
 
 func _handle_guy_overlap(other_guy : CharacterBody2D, object_area : Area2D) -> void:
 	
@@ -74,6 +92,13 @@ func _handle_guy_overlap(other_guy : CharacterBody2D, object_area : Area2D) -> v
 		elif object_area.collision_layer == 4:
 			guys_marked_for_hit.append(other_guy)
 	
+	
+func _handle_item_overlap(item : PhysicsBody2D) -> void:
+	
+	if items_marked_for_smack.has(item):
+		pass
+	else:
+		items_marked_for_smack.append(item)
 
 
 	
