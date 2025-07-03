@@ -1,5 +1,6 @@
 extends RigidBody2D
 
+const energy := 50
 
 func _ready():
 	
@@ -14,3 +15,9 @@ func smack(impulse : Vector2):
 	
 	apply_central_impulse(impulse)
 	apply_torque_impulse(impulse.length())
+	
+	
+func consume(guy : CharacterBody2D):
+	
+	guy.Strength += energy
+	queue_free()

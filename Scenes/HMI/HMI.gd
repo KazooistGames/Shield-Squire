@@ -13,6 +13,9 @@ func _process(delta : float) -> void:
 	_movement_inputs(delta)
 	_combat_inputs(delta)
 	_update_hud(delta)
+	
+	if Input.is_action_just_pressed("Interact"):
+		player.interact()
 
 
 func _movement_inputs(_delta : float) -> void:
@@ -38,7 +41,7 @@ func _combat_inputs(_delta : float) -> void:
 		player.charge()
 	elif Input.is_action_just_released("Attack"):
 		player.release()
-		
+
 		
 func _physics_process(delta):
 

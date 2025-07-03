@@ -238,3 +238,16 @@ func sap(value : float):
 		
 	else:
 		Strength -= value
+
+
+func interact():
+	
+	var interactable_bodies = hurtBox.get_overlapping_bodies()
+	
+	for body in interactable_bodies:
+		
+		if body.collision_layer & 512 >= 1:
+			body.consume(self)
+			return
+	
+	
