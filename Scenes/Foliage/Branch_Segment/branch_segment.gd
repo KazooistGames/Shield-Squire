@@ -1,4 +1,5 @@
 @tool
+
 extends StaticBody2D
 
 const sprite_dimensions = Vector2(24, 24)
@@ -20,13 +21,13 @@ enum Section {
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var collider : CollisionShape2D = $CollisionShape2D
 
-var fruit : Node2D = null
+var vegitation : Node2D = null
 
 
 func set_section(index, first_segment := false):
 	
-	if fruit:
-		fruit.queue_free()
+	if vegitation:
+		vegitation.queue_free()
 	
 	if index * sprite_dimensions.x >= $Sprite2D.texture.get_size().x:
 		return false
@@ -48,6 +49,8 @@ func set_section(index, first_segment := false):
 	
 	if index == Section.fruit:
 		_attach_fruit()
+	elif index == Section.end:
+		_attach_canopy()
 		
 	if first_segment:
 		$CollisionShape2D.shape.size.x += 10
@@ -59,9 +62,16 @@ func set_section(index, first_segment := false):
 func _attach_fruit():
 	
 	var fruit_prefab : PackedScene = load("res://Scenes/Items/Fruit/Fruit.tscn")
-	fruit = fruit_prefab.instantiate()
-	add_child(fruit)
+	vegitation = fruit_prefab.instantiate()
+	add_child(vegitation)
 	var y_offset = 8
-	fruit.position = Vector2(-1, y_offset)
+	vegitation.position = Vector2(-1, y_offset)
 	
 	
+func _attach_canopy():
+	
+	var canopy_prefab : PackedScene = load("res://Scenes/Foliage/Brush/Brush.tscn")
+	vegitation = canopy_prefab.instantiate()
+	add_child(vegitation)
+	var y_offset = -8
+	vegitation.position = Vector2(-1, y_offset)

@@ -17,3 +17,9 @@ res://Scenes/HMI/HMI.tscn
 res://Scenes/Guy/Boxes/hit_box.gd
 res://Scenes/Guy/Boxes/hit_box.tscn
 res://Scenes/Guy/Boxes/hurt_box.tscn
+res://Scenes/Guy/Archetypes/Squire/Squire.tscn
+res://Scenes/Foliage/Limb.tscn
+res://Scenes/Foliage/Canopy/Canopy.tscn
+res://Scenes/Foliage/Canopy_Segment/Canopy.tscn
+res://Scenes/Foliage/Brush/Brush.tscn
+res://Scenes/Foliage/Brush/brush.gd

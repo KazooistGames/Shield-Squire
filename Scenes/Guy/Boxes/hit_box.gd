@@ -69,7 +69,7 @@ func _process_recovering(delta : float) -> void:
 	for item in items_marked_for_smack:
 		var disposition = (item.global_position - global_position).normalized()
 		var direction = Vector2(sign(disposition.x), -1).normalized()
-		var magnitude = (parent.charge_timer / parent.charge_timer_max) * 100
+		var magnitude = (parent.charge_timer / parent.charge_timer_max) * 250
 		item.smack(direction * magnitude)
 
 	items_marked_for_smack.clear()

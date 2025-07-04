@@ -20,7 +20,7 @@ var trunk_segments : Array[StaticBody2D] = []
 func _ready():
 
 	if Height == 0:
-		Height = randi_range(4, 6)
+		Height = randi_range(4, 8)
 		
 		
 func _grow_tree(height) -> bool:

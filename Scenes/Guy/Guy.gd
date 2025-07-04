@@ -16,6 +16,7 @@ enum State{
 @export var HP := 100
 @export var Strength := 100.0
 @export var left_right := 0
+@export var Concealments : Array[Area2D] = []
 
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var hitBox : Area2D = $hitBox
@@ -106,6 +107,7 @@ func jump(height : int = 36) -> bool:
 	
 
 func duck() -> bool:
+	
 	duck_debounce = 0.0
 	return false
 	
@@ -247,7 +249,7 @@ func interact():
 	for body in interactable_bodies:
 		
 		if body.collision_layer & 512 >= 1:
-			body.consume(self)
+			body.use(self)
 			return
 	
 	

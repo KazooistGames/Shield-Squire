@@ -3,21 +3,24 @@
 [ext_resource type="PackedScene" uid="uid://cmigagy8anvbt" path="res://Scenes/Wallpaper/wallpaper.tscn" id="1_ax32a"]
 [ext_resource type="PackedScene" uid="uid://db5fff6v2i5p7" path="res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn" id="2_quvj1"]
 [ext_resource type="PackedScene" uid="uid://cvoldq46v0xyn" path="res://Scenes/HMI/HMI.tscn" id="3_quvj1"]
-[ext_resource type="PackedScene" uid="uid://b8xpmmlbv64kh" path="res://Scenes/Guy/Guy.tscn" id="4_e4n62"]
 [ext_resource type="PackedScene" uid="uid://6g65nfclhdfm" path="res://Scenes/Foliage/Tree.tscn" id="5_rg4ux"]
+[ext_resource type="PackedScene" uid="uid://ue3w37js046f" path="res://Scenes/Guy/Archetypes/Squire/Squire.tscn" id="5_yytgh"]
 
 [node name="Title" type="Node2D"]
 
 [node name="Wallpaper" parent="." instance=ExtResource("1_ax32a")]
 
 [node name="Hmi" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_quvj1")]
-player = NodePath("../Guy")
+player = NodePath("../Squire")
 
 [node name="Swordsman" parent="." instance=ExtResource("2_quvj1")]
 position = Vector2(151, 38)
 
-[node name="Guy" parent="." instance=ExtResource("4_e4n62")]
-position = Vector2(-100, 0)
-
 [node name="Tree" parent="." instance=ExtResource("5_rg4ux")]
-position = Vector2(0, 60)
+position = Vector2(-50, 60)
+
+[node name="Tree2" parent="." instance=ExtResource("5_rg4ux")]
+position = Vector2(50, 60)
+
+[node name="Squire" parent="." instance=ExtResource("5_yytgh")]
+position = Vector2(-100, 40)

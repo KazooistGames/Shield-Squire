@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr4mjiaqxpj3"
-path="res://.godot/imported/swordsman_idle-Sheet-export.png-ec8f4fb3cde205f52ac6c9daaf7e0fc9.ctex"
+uid="uid://brlfthysl0xly"
+path="res://.godot/imported/leaves_01.png-bdf0c8cd2a28a51b9ffef80df959880e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Guy/Archetypes/Swordsman/swordsman_idle-Sheet-export.png"
-dest_files=["res://.godot/imported/swordsman_idle-Sheet-export.png-ec8f4fb3cde205f52ac6c9daaf7e0fc9.ctex"]
+source_file="res://Scenes/Foliage/Brush/leaves_01.png"
+dest_files=["res://.godot/imported/leaves_01.png-bdf0c8cd2a28a51b9ffef80df959880e.ctex"]
 
 [params]
 

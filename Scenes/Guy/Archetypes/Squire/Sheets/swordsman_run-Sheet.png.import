@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nxsmresj7np2"
-path="res://.godot/imported/branch_1-export.png-d11cbcc516f8b1e952e26391335c9952.ctex"
+uid="uid://f4bs03tyrafy"
+path="res://.godot/imported/swordsman_run-Sheet.png-c132b6898803f41d534be91d1cd3dcfa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Foliage/Branch_Segment/branch_1-export.png"
-dest_files=["res://.godot/imported/branch_1-export.png-d11cbcc516f8b1e952e26391335c9952.ctex"]
+source_file="res://Scenes/Guy/Archetypes/Squire/Sheets/swordsman_run-Sheet.png"
+dest_files=["res://.godot/imported/swordsman_run-Sheet.png-c132b6898803f41d534be91d1cd3dcfa.ctex"]
 
 [params]
 

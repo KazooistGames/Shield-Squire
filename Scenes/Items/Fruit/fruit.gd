@@ -17,7 +17,7 @@ func smack(impulse : Vector2):
 	apply_torque_impulse(impulse.length())
 	
 	
-func consume(guy : CharacterBody2D):
+func use(guy : CharacterBody2D):
 	
-	guy.Strength += energy
+	guy.Strength = clampf(guy.Strength + energy, 0, 100)
 	queue_free()

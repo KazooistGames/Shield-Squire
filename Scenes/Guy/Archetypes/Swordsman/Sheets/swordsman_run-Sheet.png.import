@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0tokl0nyx5r7"
-path="res://.godot/imported/swordsman_swing-Sheet.png-16f3df9b2b8866f1d74b7212e2d2e028.ctex"
+uid="uid://cxobu116skjus"
+path="res://.godot/imported/swordsman_run-Sheet.png-a9a5ff18ff9874165f47e698ca2b10fe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Guy/Archetypes/Swordsman/swordsman_swing-Sheet.png"
-dest_files=["res://.godot/imported/swordsman_swing-Sheet.png-16f3df9b2b8866f1d74b7212e2d2e028.ctex"]
+source_file="res://Scenes/Guy/Archetypes/Swordsman/Sheets/swordsman_run-Sheet.png"
+dest_files=["res://.godot/imported/swordsman_run-Sheet.png-a9a5ff18ff9874165f47e698ca2b10fe.ctex"]
 
 [params]
 

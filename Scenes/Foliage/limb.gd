@@ -36,18 +36,12 @@ func _grow_branch(new_length) -> bool:
 func _generate_segment(base : bool, end : bool) -> bool:
 	
 	var section_index : int
-		
-	if base and end:
-		section_index = end_section_index
 	
-	elif base:
-		section_index = randi_range(base_section_index, fruit_section_index)
-	
-	elif end:
-		section_index = end_section_index
+	if end:
+		section_index = randi_range(1, 2)
 	
 	else:
-		section_index = randi_range(base_section_index, fruit_section_index)
+		section_index = randi_range(0, 1)
 	
 	var new_segment : StaticBody2D = branch_segment_prefab.instantiate()	
 	new_segment.Direction = Direction

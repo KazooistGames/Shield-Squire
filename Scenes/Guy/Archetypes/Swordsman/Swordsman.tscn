@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://db5fff6v2i5p7"]
+[gd_scene load_steps=9 format=3 uid="uid://db5fff6v2i5p7"]
 
 [ext_resource type="PackedScene" uid="uid://b8xpmmlbv64kh" path="res://Scenes/Guy/Guy.tscn" id="1_8rpvy"]
+[ext_resource type="PackedScene" uid="uid://b33yi6bb57fef" path="res://Scenes/Guy/Archetypes/Swordsman/States/attack.tscn" id="2_2jugv"]
 [ext_resource type="PackedScene" uid="uid://ds7osd76gd16t" path="res://Scenes/Guy/Personality/Personality.tscn" id="2_5v3y7"]
+[ext_resource type="PackedScene" uid="uid://bxw44lurk0sv" path="res://Scenes/Guy/Archetypes/Swordsman/States/charge.tscn" id="3_21dxl"]
 [ext_resource type="Script" uid="uid://druadp7jmaggc" path="res://Scenes/Guy/Personality/behaviours/behaviour_fight.gd" id="3_25n24"]
+[ext_resource type="PackedScene" uid="uid://4ye72t3jj42a" path="res://Scenes/Guy/Archetypes/Swordsman/States/recover.tscn" id="4_0x861"]
+[ext_resource type="PackedScene" uid="uid://c2ku86lvb3eoc" path="res://Scenes/Guy/Archetypes/Swordsman/States/run.tscn" id="5_mmmqd"]
+[ext_resource type="PackedScene" uid="uid://dfyuiajfkc0h" path="res://Scenes/Guy/Archetypes/Swordsman/States/stance.tscn" id="6_u8flm"]
 
-[node name="Guy" instance=ExtResource("1_8rpvy")]
+[node name="Swordsman" instance=ExtResource("1_8rpvy")]
+
+[node name="attack" parent="Sprite2D" index="0" instance=ExtResource("2_2jugv")]
+
+[node name="charge" parent="Sprite2D" index="1" instance=ExtResource("3_21dxl")]
+
+[node name="recover" parent="Sprite2D" index="2" instance=ExtResource("4_0x861")]
+
+[node name="run" parent="Sprite2D" index="3" instance=ExtResource("5_mmmqd")]
+
+[node name="stance" parent="Sprite2D" index="4" instance=ExtResource("6_u8flm")]
 
 [node name="Personality" parent="." index="4" instance=ExtResource("2_5v3y7")]
 
