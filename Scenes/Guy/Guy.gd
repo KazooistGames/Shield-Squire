@@ -3,6 +3,8 @@ extends CharacterBody2D
 const pixels_per_run_frame := 5
 const default_run_frames_per_second := 15
 const duck_duration := 0.2
+const coyote_period := 0.20
+
 
 enum State{
 	ready,
@@ -36,6 +38,8 @@ var charge_marked_for_release := false #used when guy attempts to swing before m
 var cooldown_timer := 0.0
 var cooldown_to_charge_ratio := 1.0
 
+var coyote_timer := 0.0
+
 var duck_debounce := 0.0
 
 signal died
@@ -48,6 +52,11 @@ func _ready() -> void:
 	
 
 func _process(delta : float) -> void:
+	
+	if is_on_floor():
+		coyote_timer = 0.0
+	else:
+		coyote_timer += delta
 	
 	facing_locked = state == State.attacking or state == State.sliding
 	
@@ -98,7 +107,7 @@ func _physics_process(delta : float) -> void:
 
 func jump(height : int = 36) -> bool:
 	
-	if not is_on_floor():
+	if coyote_timer >= coyote_period:
 		return false
 
 	sap(1)
@@ -223,9 +232,10 @@ func is_facing(object : Node2D) -> bool:
 	return sign(disposition.x) == sign(facing_direction)
 	
 	
-func turn_around():
+func turn_toward(object : Node2D):
 	
-	facing_direction *= -1
+	var x_disposition = object.global_position.x - global_position.x
+	facing_direction = sign(x_disposition)
 	
 	
 func sap(value : float):

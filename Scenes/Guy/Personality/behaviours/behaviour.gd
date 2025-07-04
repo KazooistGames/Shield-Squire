@@ -4,7 +4,6 @@ extends Node
 @export var Active := true
 @export var Yielding := false
 @export var Priority := 0
-@export var Max_Seconds := 0
 @export var Fallback : Node = null
 
 @onready var personality : Area2D = get_parent()

@@ -40,8 +40,8 @@ func set_section(index, first_segment := false):
 	$Sprite2D.flip_h = Direction == -1
 	
 	if index == Section.end:
-		$CollisionShape2D.shape.size.x = 8
-		$CollisionShape2D.position.x -= 12 * sign(Direction)
+		$CollisionShape2D.shape.size.x = 10
+		$CollisionShape2D.position.x -= 7 * sign(Direction)
 	
 	else:
 		$CollisionShape2D.shape.size.x = 24

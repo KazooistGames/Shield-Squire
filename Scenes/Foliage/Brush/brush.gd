@@ -6,6 +6,8 @@ const uninhabited_mask : Color = Color(1.0, 1.0, 1.0, 1.0)
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var collider : CollisionShape2D = $CollisionShape2D
 
+var linked_bushes : Array[Area2D] = []
+var inhabitants : Array[CharacterBody2D] = []
 
 func _ready():
 	
@@ -15,24 +17,36 @@ func _ready():
 
 func _handle_area_entered(area : Node2D):
 	
-	var parent = area.get_parent()
+	if area.collision_layer & 2048 >= 1:
+		linked_bushes.append(area)
+		
+	var area_parent = area.get_parent()
 	
-	if not parent is CharacterBody2D:
+	if not area_parent is CharacterBody2D:
 		pass
-	else:
+		
+	elif not area_parent.Concealments.has(self):
 		sprite.modulate = inhabited_mask
-		parent.Concealments.append(self)
-	
+		area_parent.Concealments.append(self)
+		inhabitants.append(area_parent)
+		
+		for bush in linked_bushes:
+			bush._handle_area_entered(area)
+			
 	
 func _handle_area_exited(area : Node2D):
 	
-	var parent = area.get_parent()
+	var area_parent = area.get_parent()
 	
-	if not parent is CharacterBody2D:
+	if not area_parent is CharacterBody2D:
 		pass
 		
-	elif parent.Concealments.has(self):
-		parent.Concealments.erase(self)
+	elif area_parent.Concealments.has(self):
+		area_parent.Concealments.erase(self)
+		inhabitants.erase(area_parent)
 		
-		if get_overlapping_areas().size() ==0:
+		if inhabitants.size() == 0:
 			sprite.modulate = uninhabited_mask
+		
+		for bush in linked_bushes:
+			bush._handle_area_exited(area)

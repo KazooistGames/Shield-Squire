@@ -5,7 +5,7 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uxpll"]
 resource_local_to_scene = true
-size = Vector2(8, 2)
+size = Vector2(10, 2)
 
 [node name="Trunk_Segment" type="StaticBody2D"]
 collision_layer = 16

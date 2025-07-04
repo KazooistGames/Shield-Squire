@@ -13,14 +13,20 @@
 [node name="Hmi" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_quvj1")]
 player = NodePath("../Squire")
 
+[node name="Squire" parent="." instance=ExtResource("5_yytgh")]
+position = Vector2(-200, 40)
+
 [node name="Swordsman" parent="." instance=ExtResource("2_quvj1")]
-position = Vector2(151, 38)
+position = Vector2(200, 38)
 
 [node name="Tree" parent="." instance=ExtResource("5_rg4ux")]
-position = Vector2(-50, 60)
+position = Vector2(-150, 60)
 
 [node name="Tree2" parent="." instance=ExtResource("5_rg4ux")]
+position = Vector2(-50, 60)
+
+[node name="Tree3" parent="." instance=ExtResource("5_rg4ux")]
 position = Vector2(50, 60)
 
-[node name="Squire" parent="." instance=ExtResource("5_yytgh")]
-position = Vector2(-100, 40)
+[node name="Tree4" parent="." instance=ExtResource("5_rg4ux")]
+position = Vector2(150, 60)
