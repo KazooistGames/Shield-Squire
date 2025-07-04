@@ -1,8 +1,8 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1751662583
+::res://::1751662647
 icon.svg::CompressedTexture2D/CompressedTexture2D::5924297756986210548::1750986713::1750986729::1::::<><><>0<>0<>115f5ab0fcee273ae551e9140e533ef3<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 README.md::TextFile/TextFile::-1::1750987501::0::1::::<><><>0<>0<><>::
-Title.tscn::PackedScene::5196781830951433978::1751662583::0::1::::<><><>0<>0<><>::uid://cmigagy8anvbt::::res://Scenes/Wallpaper/wallpaper.tscn<>uid://db5fff6v2i5p7::::res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn<>uid://cvoldq46v0xyn::::res://Scenes/HMI/HMI.tscn<>uid://6g65nfclhdfm::::res://Scenes/Foliage/Tree.tscn<>uid://ue3w37js046f::::res://Scenes/Guy/Archetypes/Squire/Squire.tscn
+Title.tscn::PackedScene::5196781830951433978::1751662647::0::1::::<><><>0<>0<><>::uid://cmigagy8anvbt::::res://Scenes/Wallpaper/wallpaper.tscn<>uid://db5fff6v2i5p7::::res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn<>uid://cvoldq46v0xyn::::res://Scenes/HMI/HMI.tscn<>uid://6g65nfclhdfm::::res://Scenes/Foliage/Tree.tscn<>uid://ue3w37js046f::::res://Scenes/Guy/Archetypes/Squire/Squire.tscn
 ::res://Scenes/::1751469658
 ::res://Scenes/Foliage/::1751656509
 limb.gd::GDScript/GDScript::3287016700950742529::1751554972::0::1::::<>Node2D<><>0<>0<><>::
@@ -21,8 +21,8 @@ leaves_01.png::CompressedTexture2D/CompressedTexture2D::3602677101454638370::175
 tree_1.png::CompressedTexture2D/CompressedTexture2D::5780526619591896172::1751644094::1751644141::1::::<><><>0<>0<>73e33b6e5c222ec3143a7b490adf8562<>res://.godot/imported/tree_1.png-5cba9698ad378578794221a389479629.ctex::
 trunk_segment.gd::GDScript/GDScript::6438579547259940337::1751656548::0::1::::<>StaticBody2D<><>0<>1<><>::
 Trunk_Segment.tscn::PackedScene/PackedScene::7602841784808877644::1751645106::0::1::::<><><>0<>0<><>::uid://comeot1ww6vaa::::res://Scenes/Foliage/Trunk_Segment/tree_1.png<>uid://cxy5p157duw7j::::res://Scenes/Foliage/Trunk_Segment/trunk_segment.gd
-::res://Scenes/Guy/::1751662256
-Guy.gd::GDScript::4716881350281650137::1751662256::0::1::::<>CharacterBody2D<><>0<>0<><>::
+::res://Scenes/Guy/::1751662647
+Guy.gd::GDScript::4716881350281650137::1751662647::0::1::::<>CharacterBody2D<><>0<>0<><>::
 Guy.tscn::PackedScene/PackedScene::4751066043857701367::1751554469::0::1::::<><><>0<>0<><>::uid://b8g5l11p4we4p::::res://Scenes/Guy/Guy.gd<>uid://bmcqnvjikwaio::::res://Scenes/Guy/Boxes/hit_box.tscn<>uid://cjabutfsxarfr::::res://Scenes/Guy/Archetypes/Swordsman/Sheets/swordsman_idle-Sheet.png<>uid://dvvwdnj3kbih0::::res://Scenes/Guy/Animation/sprite_2d.gd<>uid://0f80yrlwqjbo::::res://Scenes/Guy/Boxes/hurt_box.tscn
 ::res://Scenes/Guy/Animation/::1751401461
 custom_sprite_sheet_animator.gd::GDScript/GDScript::6510200472140959437::1751296382::0::1::::<>Node<><>0<>0<><>::
@@ -30,7 +30,7 @@ sprite_2d.gd::GDScript/GDScript::8677921529528211087::1751320149::0::1::::<>Spri
 ::res://Scenes/Guy/Archetypes/::1751553415
 ::res://Scenes/Guy/Archetypes/Squire/::1751660329
 Squire.tscn::PackedScene::1413775267561790879::1751660329::0::1::::<><><>0<>0<><>::uid://b8xpmmlbv64kh::::res://Scenes/Guy/Guy.tscn<>uid://b33yi6bb57fef::::res://Scenes/Guy/Archetypes/Swordsman/States/attack.tscn<>uid://dl57amvdhsks7::::res://Scenes/Guy/Archetypes/Squire/Sheets/squire_swing-Sheet.png<>uid://bxw44lurk0sv::::res://Scenes/Guy/Archetypes/Swordsman/States/charge.tscn<>uid://4ye72t3jj42a::::res://Scenes/Guy/Archetypes/Swordsman/States/recover.tscn<>uid://c2ku86lvb3eoc::::res://Scenes/Guy/Archetypes/Swordsman/States/run.tscn<>uid://dfyuiajfkc0h::::res://Scenes/Guy/Archetypes/Swordsman/States/stance.tscn<>uid://cqdw47pv7u7a4::::res://Scenes/Guy/Archetypes/Squire/Sheets/squire_run-Sheet.png<>uid://djph2vvtbxyhc::::res://Scenes/Guy/Archetypes/Squire/Sheets/squire_idle-Sheet.png
-::res://Scenes/Guy/Archetypes/Squire/Sheets/::1751662582
+::res://Scenes/Guy/Archetypes/Squire/Sheets/::1751662623
 squire_idle-Sheet.png::CompressedTexture2D::7822401681814075832::1751661230::1751661233::1::::<><><>0<>0<>9722bd3ebe37112395d132e8c93b3558<>res://.godot/imported/squire_idle-Sheet.png-5ea7993af7078bc80f6bcec5653c3647.ctex::
 squire_run-Sheet.png::CompressedTexture2D::5903445265638004381::1751662477::1751662582::1::::<><><>0<>0<>01f0af40475afbcb5178c3030f1a7d9b<>res://.godot/imported/squire_run-Sheet.png-1bda4e1575a595b9d284586ca465050a.ctex::
 squire_swing-Sheet.png::CompressedTexture2D::7995214270355454284::1751662615::1751662623::1::::<><><>0<>0<>c24d59ff62c6907b0fa40414cce469be<>res://.godot/imported/squire_swing-Sheet.png-4ec5a69b2ce4f66ae31ab4b75e31ff84.ctex::
@@ -67,11 +67,13 @@ behaviour_fight.gd::GDScript::8393766143097719366::1751660548::0::1::::<>Node<><
 ::res://Scenes/HMI/::1751511376
 HMI.gd::GDScript/GDScript::5398665332297802219::1751511376::0::1::::<>Camera2D<><>0<>0<><>::
 HMI.tscn::PackedScene/PackedScene::6276382503254366417::1751502558::0::1::::<><><>0<>0<><>::uid://ci6fh2bff5v1d::::res://Scenes/HMI/HMI.gd
-::res://Scenes/Items/::1751469699
+::res://Scenes/Items/::1751663150
 ::res://Scenes/Items/Fruit/::1751554469
 fruit.gd::GDScript/GDScript::1203373162745166900::1751552453::0::1::::<>RigidBody2D<><>0<>0<><>::
 fruit.png::CompressedTexture2D/CompressedTexture2D::6798687786618071064::1751476693::1751476698::1::::<><><>0<>0<>606666ef6c7061541ff27ddd57552deb<>res://.godot/imported/fruit.png-70967f3b8567fa04f2155e1c205dd51f.ctex::
 Fruit.tscn::PackedScene/PackedScene::8109336299488702415::1751554469::0::1::::<><><>0<>0<><>::uid://re6m6qocgyyu::::res://Scenes/Items/Fruit/fruit.gd<>uid://c34lnodgsblca::::res://Scenes/Items/Fruit/fruit.png
+::res://Scenes/Items/SirWillington/::1751663659
+Willington.png::CompressedTexture2D::4692388108180619209::1751663659::1751663748::1::::<><><>0<>0<>e4a79495e37d27f969a9159daca851a4<>res://.godot/imported/Willington.png-6a858186436ac047e630a6b99763e226.ctex::
 ::res://Scenes/Wallpaper/::1751400844
 atmosphere.png::CompressedTexture2D/CompressedTexture2D::3904215178059579040::1751166406::1751400802::1::::<><><>0<>0<>e794dca67ce7bd04dc3cabae7fec338c<>res://.godot/imported/atmosphere.png-84eebccd68cd48175fd221fce11e10fb.ctex::
 wallpaper.tscn::PackedScene/PackedScene::5631987168746978833::1751400802::0::1::::<><><>0<>0<><>::uid://bvvh4ayx4v5y7::::res://Scenes/Wallpaper/atmosphere.png

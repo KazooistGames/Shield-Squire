@@ -1,6 +1,6 @@
 extends Area2D
 
-const destination_deadband = 20
+const destination_deadband = 16
 
 @export var Deadend := false
 @export var Deadbanded := false
@@ -65,17 +65,25 @@ func detected_bodies() -> Array[Node2D]:
 func inside_deadband() -> bool:
 	
 	var disposition : Vector2 = Desired_Coordinates - global_position
-	
-	if Me.is_on_floor():
-		return disposition.length() < destination_deadband
-		
-	else:
-		return abs(disposition.x) < destination_deadband
+	var slide_length = get_slide_length()
 
+	if Me.is_on_floor():
+		return disposition.length() - slide_length < destination_deadband
+	else:
+		return abs(disposition.x) - slide_length < destination_deadband
+
+
+func get_slide_length():
+	
+	var time_to_stop = Me.velocity.x / (Me.acceleration  / 2.0)
+	var average_speed = Me.velocity.x / 2.0
+	return average_speed * time_to_stop
+	
 
 func dynamic_deadband():
 	
 	return Me.velocity.x / Me.speed * destination_deadband
+
 
 func _position_raycasts():
 	
