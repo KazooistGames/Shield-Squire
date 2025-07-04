@@ -21,13 +21,13 @@ enum Section {
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var collider : CollisionShape2D = $CollisionShape2D
 
-var vegitation : Node2D = null
+var vegetation : Node2D = null
 
 
 func set_section(index, first_segment := false):
 	
-	if vegitation:
-		vegitation.queue_free()
+	if vegetation:
+		vegetation.queue_free()
 	
 	if index * sprite_dimensions.x >= $Sprite2D.texture.get_size().x:
 		return false
@@ -62,16 +62,17 @@ func set_section(index, first_segment := false):
 func _attach_fruit():
 	
 	var fruit_prefab : PackedScene = load("res://Scenes/Items/Fruit/Fruit.tscn")
-	vegitation = fruit_prefab.instantiate()
-	add_child(vegitation)
+	vegetation = fruit_prefab.instantiate()
+	add_child(vegetation)
 	var y_offset = 8
-	vegitation.position = Vector2(-1, y_offset)
+	vegetation.position = Vector2(-1, y_offset)
 	
 	
 func _attach_canopy():
 	
 	var canopy_prefab : PackedScene = load("res://Scenes/Foliage/Brush/Brush.tscn")
-	vegitation = canopy_prefab.instantiate()
-	add_child(vegitation)
-	var y_offset = -8
-	vegitation.position = Vector2(-1, y_offset)
+	vegetation = canopy_prefab.instantiate()
+	add_child(vegetation)
+	var y_offset = -11
+	var x_offset = -12 * sign(Direction)
+	vegetation.position = Vector2(x_offset, y_offset)

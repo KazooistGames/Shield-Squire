@@ -21,13 +21,12 @@ enum Section {
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var collider : CollisionShape2D = $CollisionShape2D
 
-var limb : Node2D = null
-
+var vegetation = null
 
 func set_section(index):
 	
-	if limb:
-		limb.queue_free()
+	if vegetation:
+		vegetation.queue_free()
 	
 	if index * sprite_dimensions.y >= $Sprite2D.texture.get_size().y:
 		return false
@@ -44,6 +43,8 @@ func set_section(index):
 	
 	if index == Section.branch:
 		_attach_limb()
+	elif index == Section.canopy:
+		_attach_canopy()
 	
 	return true
 	
@@ -51,8 +52,17 @@ func set_section(index):
 func _attach_limb():	
 	
 	var limb_prefab : PackedScene = load("res://Scenes/Foliage/Limb.tscn")
-	limb = limb_prefab.instantiate()
-	limb.Direction = -1 if $Sprite2D.flip_h else 1
-	add_child(limb)
+	vegetation = limb_prefab.instantiate()
+	vegetation.Direction = -1 if $Sprite2D.flip_h else 1
+	add_child(vegetation)
 	var x_offset = -sprite_dimensions.x if $Sprite2D.flip_h else sprite_dimensions.x
-	limb.position = Vector2(x_offset, 2)
+	vegetation.position = Vector2(x_offset, 2)
+	
+	
+func _attach_canopy():
+	
+	var canopy_prefab : PackedScene = load("res://Scenes/Foliage/Brush/Brush.tscn")
+	vegetation = canopy_prefab.instantiate()
+	add_child(vegetation)
+	var y_offset = -6
+	vegetation.position = Vector2(0, y_offset)
