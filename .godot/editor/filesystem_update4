@@ -5,3 +5,6 @@ res://Scenes/Foliage/Brush/Brush.tscn
 res://Scenes/Foliage/Branch_Segment/branch_segment.gd
 res://Scenes/Foliage/Trunk_Segment/Trunk_Segment.tscn
 res://Scenes/Foliage/Trunk_Segment/trunk_segment.gd
+res://Scenes/Foliage/Brush/brush.gd
+res://Scenes/Guy/Boxes/hurt_box.tscn
+res://Scenes/Guy/Personality/behaviours/behaviour_fight.gd

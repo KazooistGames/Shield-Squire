@@ -39,7 +39,7 @@ func set_section(index):
 	$Sprite2D.flip_h = randf() > 0.5
 	
 	if index == Section.canopy:
-		$CollisionShape2D.disabled = true
+		$CollisionShape2D.disabled = false
 	
 	if index == Section.branch:
 		_attach_limb()
@@ -64,5 +64,5 @@ func _attach_canopy():
 	var canopy_prefab : PackedScene = load("res://Scenes/Foliage/Brush/Brush.tscn")
 	vegetation = canopy_prefab.instantiate()
 	add_child(vegetation)
-	var y_offset = -6
+	var y_offset = -4
 	vegetation.position = Vector2(0, y_offset)

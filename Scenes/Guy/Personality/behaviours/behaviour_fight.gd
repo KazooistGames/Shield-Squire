@@ -26,12 +26,32 @@ func _determine_foe():
 		
 		for body in personality.detected_bodies():
 			
-			if body is CharacterBody2D:
+			if not body is CharacterBody2D:
+				pass
+			elif _can_see_through_all_concealments(body) :
 				Foe = body
 				
 	elif not personality.detected_bodies().has(Foe):
 		Foe = null
 		Desired_Coordinates = personality.global_position
 		
+	elif not _can_see_through_all_concealments(Foe):
+		Foe = null
+		Desired_Coordinates = personality.global_position
+		
 	else:
 		Desired_Coordinates = Foe.global_position
+
+
+func _can_see_through_all_concealments(other_guy : CharacterBody2D) -> bool:
+	
+	for concealment in other_guy.Concealments:
+		
+		if concealment == null:
+			continue
+		elif not personality.Me.Concealments.has(concealment):
+			return false
+	
+	return true
+	
+	
