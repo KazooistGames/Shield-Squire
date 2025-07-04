@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-const pixels_per_run_frame := 5
-const default_run_frames_per_second := 15
 const duck_duration := 0.2
 const coyote_period := 0.20
 
@@ -53,11 +51,6 @@ func _ready() -> void:
 
 func _process(delta : float) -> void:
 	
-	if is_on_floor():
-		coyote_timer = 0.0
-	else:
-		coyote_timer += delta
-	
 	facing_locked = state == State.attacking or state == State.sliding
 	
 	if left_right != 0 and not facing_locked:
@@ -98,11 +91,17 @@ func _physics_process(delta : float) -> void:
 	if not is_on_floor():
 		velocity.y += 980 * delta
 		
-	var speed_ratio: float = clamp(1.0 - abs(velocity.x/speed), 0.5, 1.0)
+	var real_speed : float = speed * lerpf(0.5, 1.0, Strength/100)
+	var speed_ratio: float = clamp(1.0 - abs(velocity.x/real_speed), 0.5, 1.0)
 	var real_accel : float = acceleration * speed_ratio
-	var target_speed = left_right * speed if state == State.ready else 0
+	var target_speed = left_right * real_speed if state == State.ready else 0
 	velocity.x = move_toward(velocity.x, target_speed, real_accel * delta)
 	move_and_slide()
+	
+	if is_on_floor():
+		coyote_timer = 0.0
+	else:
+		coyote_timer += delta
 	
 
 func jump(height : int = 36) -> bool:
@@ -110,6 +109,7 @@ func jump(height : int = 36) -> bool:
 	if coyote_timer >= coyote_period:
 		return false
 
+	coyote_timer = coyote_period
 	sap(1)
 	velocity.y = -sqrt(height * 1960)
 	return true

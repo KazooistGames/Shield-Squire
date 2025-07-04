@@ -73,6 +73,10 @@ func inside_deadband() -> bool:
 		return abs(disposition.x) < destination_deadband
 
 
+func dynamic_deadband():
+	
+	return Me.velocity.x / Me.speed * destination_deadband
+
 func _position_raycasts():
 	
 	across.target_position.x = Me.facing_direction * 120
@@ -100,3 +104,6 @@ func _calculate_deadend() -> bool:
 	else:
 		var y_delta = down.get_collision_point().y - Me.global_position.y
 		return y_delta < -Me.jump_height
+
+
+	

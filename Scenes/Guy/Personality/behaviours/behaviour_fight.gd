@@ -60,6 +60,7 @@ func _physics_process(delta) -> void:
 		State.wait:
 			Desired_Coordinates = personality.Me.global_position
 			swing_cooldown_period = 0.0
+			personality.Me.turn_toward(Foe)
 
 func _determine_foe():
 	
