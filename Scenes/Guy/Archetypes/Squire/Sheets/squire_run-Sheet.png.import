@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brlfthysl0xly"
-path="res://.godot/imported/leaves_01.png-bdf0c8cd2a28a51b9ffef80df959880e.ctex"
+uid="uid://cqdw47pv7u7a4"
+path="res://.godot/imported/squire_run-Sheet.png-1bda4e1575a595b9d284586ca465050a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Foliage/Brush/leaves_01.png"
-dest_files=["res://.godot/imported/leaves_01.png-bdf0c8cd2a28a51b9ffef80df959880e.ctex"]
+source_file="res://Scenes/Guy/Archetypes/Squire/Sheets/squire_run-Sheet.png"
+dest_files=["res://.godot/imported/squire_run-Sheet.png-1bda4e1575a595b9d284586ca465050a.ctex"]
 
 [params]
 

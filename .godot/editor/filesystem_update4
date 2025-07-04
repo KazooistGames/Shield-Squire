@@ -11,3 +11,5 @@ res://Scenes/Guy/Personality/behaviours/behaviour_fight.gd
 res://Scenes/Guy/Personality/behaviours/behaviour.gd
 res://Scenes/Guy/Guy.gd
 res://Scenes/Foliage/Branch_Segment/Branch_Segment.tscn
+res://Scenes/Foliage/Bush/Brush.tscn
+res://Scenes/Foliage/Bush/Bush.tscn

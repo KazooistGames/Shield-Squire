@@ -61,7 +61,7 @@ func _attach_limb():
 	
 func _attach_canopy():
 	
-	var canopy_prefab : PackedScene = load("res://Scenes/Foliage/Brush/Brush.tscn")
+	var canopy_prefab : PackedScene = load("res://Scenes/Foliage/Bush/Bush.tscn")
 	vegetation = canopy_prefab.instantiate()
 	add_child(vegetation)
 	var y_offset = -4

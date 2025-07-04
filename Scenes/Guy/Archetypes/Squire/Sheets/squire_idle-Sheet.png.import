@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f4bs03tyrafy"
-path="res://.godot/imported/swordsman_run-Sheet.png-c132b6898803f41d534be91d1cd3dcfa.ctex"
+uid="uid://djph2vvtbxyhc"
+path="res://.godot/imported/squire_idle-Sheet.png-5ea7993af7078bc80f6bcec5653c3647.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Guy/Archetypes/Squire/Sheets/swordsman_run-Sheet.png"
-dest_files=["res://.godot/imported/swordsman_run-Sheet.png-c132b6898803f41d534be91d1cd3dcfa.ctex"]
+source_file="res://Scenes/Guy/Archetypes/Squire/Sheets/squire_idle-Sheet.png"
+dest_files=["res://.godot/imported/squire_idle-Sheet.png-5ea7993af7078bc80f6bcec5653c3647.ctex"]
 
 [params]
 
