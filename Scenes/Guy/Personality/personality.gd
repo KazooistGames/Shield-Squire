@@ -75,7 +75,7 @@ func inside_deadband() -> bool:
 
 func get_slide_length():
 	
-	var time_to_stop = Me.velocity.x / (Me.acceleration  / 2.0)
+	var time_to_stop = Me.velocity.x / (Me.acceleration)
 	var average_speed = Me.velocity.x / 2.0
 	return average_speed * time_to_stop
 	

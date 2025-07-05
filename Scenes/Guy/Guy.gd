@@ -94,7 +94,8 @@ func _physics_process(delta : float) -> void:
 	var real_speed : float = speed * lerpf(0.5, 1.0, Strength/100)
 	var speed_ratio: float = clamp(1.0 - abs(velocity.x/real_speed), 0.5, 1.0)
 	var real_accel : float = acceleration * speed_ratio
-	var target_speed = left_right * real_speed if state == State.ready else 0
+	var can_move : bool = state == State.ready or not is_on_floor()
+	var target_speed = left_right * real_speed if can_move else 0
 	velocity.x = move_toward(velocity.x, target_speed, real_accel * delta)
 	move_and_slide()
 	
