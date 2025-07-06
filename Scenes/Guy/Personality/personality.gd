@@ -1,8 +1,14 @@
 extends Area2D
 
-const destination_deadband = 16
+const deadband_radius = 16
 
-@export var Deadend := false
+enum TravelMode {
+	traversing,
+	climbing,
+	descending
+}
+@export var travel_mode : TravelMode = TravelMode.traversing
+
 @export var Deadbanded := false
 @export var Desired_Coordinates := Vector2.ZERO
 @export var Active_Behaviour : Node = null
@@ -12,11 +18,16 @@ const destination_deadband = 16
 
 @onready var across : RayCast2D = $across
 @onready var down : RayCast2D = $down
+@onready var above : RayCast2D = $above
+
+var displacement := Vector2.ZERO
+var cached_coordinates := Vector2.ZERO
 
 
 func _ready() -> void:
 	
 	Active_Behaviour = get_current_priority()
+	Me.fell.connect(_handle_fall)
 
 
 func _physics_process(delta : float) -> void:
@@ -25,13 +36,51 @@ func _physics_process(delta : float) -> void:
 	
 	Desired_Coordinates = Active_Behaviour.Desired_Coordinates
 	
-	if not inside_deadband():
+	if cached_coordinates != Desired_Coordinates:
 		Deadbanded = false
-		Me.left_right = sign(Desired_Coordinates.x - global_position.x)
+		cached_coordinates = Desired_Coordinates
 		
-	elif not Deadbanded:
-		Deadbanded = true
+	displacement = Desired_Coordinates - global_position
+	#print(displacement)
+	
+	if Deadbanded:
+		pass
+	if inside_deadband():
 		Me.left_right = 0
+		Deadbanded = true
+	elif displacement.y <= -deadband_radius: #start dropping to target
+		_climb(delta)
+	elif abs(displacement.x) > deadband_radius:
+		Me.left_right = sign(displacement.x)
+	elif displacement.y > -deadband_radius:
+		_descend(delta)
+
+	
+		
+		
+func _climb(delta : float) -> void:
+	
+	if not Me.is_on_floor(): #in the air - lock in the trajectory we got by not changing left_right controls
+		return
+		
+	if above.is_colliding():
+		Me.left_right = 0
+		Me.jump()
+		
+	elif Me.left_right == 0:
+		Me.left_right = sign(displacement.x)
+	
+	elif is_deadended():
+		print('deadended')
+		Me.left_right *= -1
+		
+
+func _descend(delta : float) -> void:
+	
+	if not Me.is_on_floor():
+		return
+	else:
+		Me.duck()
 
 
 func get_current_priority() -> Node:
@@ -55,6 +104,19 @@ func get_current_priority() -> Node:
 	return priority_state
 
 
+func is_deadended() -> bool:
+	
+	if not across.is_colliding():
+		return false
+		
+	elif not down.is_colliding():
+		return false
+	
+	else:
+		var y_delta = down.get_collision_point().y - Me.global_position.y
+		return y_delta <= -Me.jump_height
+		
+		
 func detected_bodies() -> Array[Node2D]:
 	
 	var overlapping_bodies : Array[Node2D] = get_overlapping_bodies()
@@ -68,9 +130,9 @@ func inside_deadband() -> bool:
 	var slide_length = get_slide_length()
 
 	if Me.is_on_floor():
-		return disposition.length() - slide_length < destination_deadband
+		return disposition.length() - slide_length < deadband_radius
 	else:
-		return abs(disposition.x) - slide_length < destination_deadband
+		return false
 
 
 func get_slide_length():
@@ -78,40 +140,29 @@ func get_slide_length():
 	var time_to_stop = Me.velocity.x / (Me.acceleration)
 	var average_speed = Me.velocity.x / 2.0
 	return average_speed * time_to_stop
-	
-
-func dynamic_deadband():
-	
-	return Me.velocity.x / Me.speed * destination_deadband
 
 
 func _position_raycasts():
 	
-	across.target_position.x = Me.facing_direction * 120
+	across.target_position.x = Me.facing_direction * 48
 	
 	if across.is_colliding():
 		var point := across.get_collision_point()
 		down.global_position.x = point.x
-		down.global_position.y = point.y - 90
+		down.global_position.y = point.y - down.target_position.y/2.0
 		
 	else:
 		down.position.x = across.target_position.x
 		down.position.y = -down.target_position.y/2.0
-	
-	Deadend = _calculate_deadend()
-	
-
-func _calculate_deadend() -> bool:
-	
-	if not across.is_colliding():
-		return false
 		
-	elif not down.is_colliding():
-		return false
+
+func _handle_fall():
 	
-	else:
-		var y_delta = down.get_collision_point().y - Me.global_position.y
-		return y_delta < -Me.jump_height
+	if displacement.y < -deadband_radius: #start dropping to target
+		Me.jump()
+	elif abs(displacement.y) < deadband_radius:
+		Me.jump()
+		
 
 
 	

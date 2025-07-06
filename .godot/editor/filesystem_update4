@@ -4,3 +4,4 @@ res://Scenes/Guy/Guy.tscn
 res://Scenes/Guy/Guy.gd
 res://Scenes/Guy/Personality/behaviours/behaviour_fight.gd
 res://Scenes/Items/Fruit/Fruit.tscn
+res://Scenes/Guy/Personality/Personality.tscn

@@ -15,15 +15,12 @@ shape = SubResource("CircleShape2D_1kdm2")
 debug_color = Color(0.627451, 0.533333, 0, 0.196078)
 
 [node name="across" type="RayCast2D" parent="."]
-target_position = Vector2(-36, 0)
-collision_mask = 17
+target_position = Vector2(-120, 0)
 
 [node name="down" type="RayCast2D" parent="."]
-position = Vector2(-36, -36)
-target_position = Vector2(0, 72)
-collision_mask = 17
+position = Vector2(-120, -100)
+target_position = Vector2(0, 200)
 
 [node name="above" type="RayCast2D" parent="."]
-position = Vector2(0, -36)
-target_position = Vector2(0, 36)
-collision_mask = 17
+position = Vector2(0, -120)
+target_position = Vector2(0, 240)

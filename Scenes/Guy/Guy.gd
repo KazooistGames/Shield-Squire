@@ -26,7 +26,7 @@ var speed := 75.0
 var facing_direction := 1
 var facing_locked := false
 var acceleration := 480.0
-var jump_height = 75
+var jump_height = 36
 
 var charge_timer := 0.0
 var charge_timer_max := 1.0
@@ -41,7 +41,8 @@ var coyote_timer := 0.0
 var duck_debounce := 0.0
 
 signal died
-
+signal jumped
+signal fell
 
 func _ready() -> void:
 	
@@ -91,6 +92,7 @@ func _physics_process(delta : float) -> void:
 	if not is_on_floor():
 		velocity.y += 980 * delta
 		
+	_coyote(delta)
 	var real_speed : float = speed * lerpf(0.5, 1.0, Strength/100)
 	var speed_ratio: float = clamp(1.0 - abs(velocity.x/real_speed), 0.5, 1.0)
 	var real_accel : float = acceleration * speed_ratio
@@ -98,21 +100,29 @@ func _physics_process(delta : float) -> void:
 	var target_speed = left_right * real_speed if can_move else 0
 	velocity.x = move_toward(velocity.x, target_speed, real_accel * delta)
 	move_and_slide()
+
+
+func _coyote(delta):
 	
 	if is_on_floor():
 		coyote_timer = 0.0
-	else:
-		coyote_timer += delta
-	
+		return
+		
+	elif coyote_timer == 0.0:
+		fell.emit()		
+		
+	coyote_timer += delta
+		
 
-func jump(height : int = 36) -> bool:
+func jump() -> bool:
 	
 	if coyote_timer >= coyote_period:
 		return false
 
 	coyote_timer = coyote_period
 	sap(1)
-	velocity.y = -sqrt(height * 1960)
+	velocity.y = -sqrt(jump_height * 1960)
+	jumped.emit()
 	return true
 	
 
