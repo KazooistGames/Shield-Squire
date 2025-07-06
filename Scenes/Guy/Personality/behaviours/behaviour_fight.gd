@@ -21,7 +21,7 @@ var min_state_time = 3
 var max_state_time = 10
 
 var quick_swing := false
-var  swing_range = 20
+var swing_range = 20
 var yield_delay_period := 1.0
 var yield_delay_timer := 0.0
 
@@ -68,12 +68,19 @@ func _determine_foe():
 	if not Foe:
 
 		for body : Area2D in personality.detected_areas():
-			var parent = body.get_parent()
 			
+			if body.collision_layer & 8 <= 0:
+				continue
+				
+			var parent = body.get_parent()
+		
 			if not parent is CharacterBody2D:
 				pass
 			
-			elif body.collision_layer & 8 <= 0:
+			elif parent.Team == personality.Me.Team:
+				pass
+				
+			elif parent.state == parent.State.dead:
 				pass
 				
 			elif _can_see_through_all_concealments(parent) :
@@ -84,6 +91,9 @@ func _determine_foe():
 		#Desired_Coordinates = personality.global_position
 		
 	elif not _can_see_through_all_concealments(Foe):
+		Foe = null
+		
+	elif Foe.state == Foe.State.dead:
 		Foe = null
 		#Desired_Coordinates = personality.global_position
 
@@ -133,13 +143,12 @@ func calc_next_state():
 	
 	var energy_ratio = personality.Me.Strength / 100.0
 	var flee_chance = lerpf(0.1, 0.0, energy_ratio)
-	var wait_chance = 0.25 + lerpf(0.25, 0.0, energy_ratio)
 	
 	var random = randf()
 	
-	if random <= flee_chance:
+	if randf() <= flee_chance:
 		return State.flee
-	elif random <= wait_chance + flee_chance:
+	elif randf() <= 0.5:
 		return State.wait
 	else:
 		return State.charge

@@ -89,7 +89,11 @@ func _process_recovering(delta : float) -> void:
 
 func _handle_guy_overlap(other_guy : CharacterBody2D, object_area : Area2D) -> void:
 	
-		if guys_marked_for_parry.has(other_guy):
+	
+		if other_guy.state == other_guy.State.dead:
+			pass
+			
+		elif guys_marked_for_parry.has(other_guy):
 			pass
 			
 		elif other_guy.state == other_guy.State.attacking and object_area.collision_layer == 8:

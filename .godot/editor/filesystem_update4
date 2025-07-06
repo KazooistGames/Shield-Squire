@@ -9,3 +9,4 @@ res://Scenes/Guy/Personality/Personality.tscn
 res://Scenes/Guy/Boxes/hit_box.tscn
 res://Scenes/HMI/HMI.tscn
 res://Scenes/Guy/Personality/behaviours/behaviour_fight.gd
+res://Scenes/Guy/Boxes/hit_box.gd

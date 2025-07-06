@@ -32,6 +32,9 @@ func _ready() -> void:
 
 func _physics_process(delta : float) -> void:
 	
+	if Me.state == Me.State.dead:
+		return
+		
 	_position_raycasts()
 	Desired_Coordinates = Active_Behaviour.Desired_Coordinates
 	
@@ -99,7 +102,9 @@ func _position_raycasts():
 
 func _handle_fall():
 	
-	if displacement.y < -deadband_radius: #start dropping to target
+	if Me.state == Me.State.dead:
+		return 
+	elif displacement.y < -deadband_radius: #start dropping to target
 		Me.jump()
 	elif abs(displacement.y) < deadband_radius:
 		Me.jump()
@@ -123,6 +128,9 @@ func get_current_priority() -> Node:
 		elif state.Priority > highest_priority_so_far:
 			highest_priority_so_far = state.process_priority
 			priority_state = state
+	
+	if Me.state == Me.State.dead:
+		return null
 	
 	priority_state.Active = true
 	return priority_state

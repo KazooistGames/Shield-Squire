@@ -3,7 +3,7 @@ extends CharacterBody2D
 const duck_duration := 0.1
 const coyote_period := 0.20
 const acceleration := 480
-const top_speed := 75
+const top_speed := 60
 const charge_timer_max := 1.0
 const charge_timer_min := 0.20
 
@@ -12,7 +12,8 @@ enum State{
 	charging,
 	attacking,
 	recovering,
-	sliding
+	sliding,
+	dead
 }
 
 @export var Team := 0
@@ -26,7 +27,7 @@ enum State{
 @onready var hitbox : Area2D = $hitBox
 @onready var hurtbox : Area2D = $hurtBox
 
-var speed := 75.0
+var speed := 60.0
 var facing_direction := 1
 var facing_locked := false
 
@@ -53,9 +54,6 @@ func _ready() -> void:
 	
 
 func _process(delta : float) -> void:
-	
-	if HP <= 0:
-		return
 	
 	facing_locked = state == State.attacking or state == State.sliding
 	
@@ -94,11 +92,10 @@ func _process(delta : float) -> void:
 
 func _physics_process(delta : float) -> void:
 	
-	if HP <= 0:
-		return
-	
 	if not is_on_floor():
 		velocity.y += 980 * delta
+		
+	move_and_slide()	
 		
 	_coyote(delta)
 	speed = top_speed * lerpf(0.5, 1.0, Strength/100)
@@ -114,7 +111,7 @@ func _physics_process(delta : float) -> void:
 	elif is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, real_accel * delta)
 		
-	move_and_slide()
+
 
 
 func _coyote(delta):
@@ -132,6 +129,8 @@ func _coyote(delta):
 func jump() -> bool:
 	
 	if coyote_timer >= coyote_period:
+		return false
+	elif state == State.dead:
 		return false
 
 	coyote_timer = coyote_period
@@ -198,23 +197,6 @@ func ready() -> bool:
 		return true
 	else:
 		return false
-		
-		
-func check_sprite_collision(coordinates : Vector2, bounds : Vector2, offset : Vector2 = Vector2.ZERO) -> bool:
-	
-	var disposition : Vector2 = coordinates - global_position
-	var pixel_coord : Vector2
-	var bound_coord : Vector2 = Vector2.ZERO
-	
-	for y in range(-bounds.y / 2.0, bounds.y / 2.0):
-		bound_coord.y = y
-		for x in range(-bounds.x / 2.0, bounds.x / 2.0):
-			bound_coord.x = x
-			pixel_coord = disposition + bound_coord + offset
-			if sprite.is_pixel_opaque(pixel_coord):
-				return true
-		
-	return false
 	
 
 func _handle_hit(guy : CharacterBody2D):
@@ -230,6 +212,25 @@ func _handle_parry(guy : CharacterBody2D):
 	var impulse = Vector2(facing_direction, 0) * 100
 	guy.shove(impulse)
 	guy.cooldown_timer = max(charge_timer * 2.0, guy.cooldown_timer)
+
+		
+func check_sprite_collision(coordinates : Vector2, bounds : Vector2, offset : Vector2 = Vector2.ZERO) -> bool:
+	
+	var disposition : Vector2 = coordinates - global_position
+	var pixel_coord : Vector2
+	var bound_coord : Vector2 = Vector2.ZERO
+	
+	for y in range(-bounds.y / 2.0, bounds.y / 2.0):
+		bound_coord.y = y
+		
+		for x in range(-bounds.x / 2.0, bounds.x / 2.0):
+			bound_coord.x = x
+			pixel_coord = disposition + bound_coord + offset
+			
+			if sprite.is_pixel_opaque(pixel_coord):
+				return true
+		
+	return false
 
 	
 func shove(impulse : Vector2) -> void:
@@ -252,6 +253,7 @@ func damage(value : int) -> void:
 	
 	if HP <= 0:
 		died.emit()
+		state = State.dead
 
 
 func is_facing(object : Node2D) -> bool:
