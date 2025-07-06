@@ -105,7 +105,7 @@ func _can_see_through_all_concealments(other_guy : CharacterBody2D) -> bool:
 	
 func calc_next_state():
 	
-	return randi_range(0, 2)
+	return randi_range(0, 1)
 	
 	
 func set_state(new_state : State):

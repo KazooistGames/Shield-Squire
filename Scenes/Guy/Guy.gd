@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const duck_duration := 0.2
+const duck_duration := 0.1
 const coyote_period := 0.20
 
 
