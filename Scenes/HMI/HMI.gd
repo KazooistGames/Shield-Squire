@@ -10,9 +10,10 @@ extends Camera2D
 
 func _process(delta : float) -> void:
 
-	_movement_inputs(delta)
-	_combat_inputs(delta)
-	_update_hud(delta)
+	if player:
+		_movement_inputs(delta)
+		_combat_inputs(delta)
+		_update_hud(delta)
 	
 	if Input.is_action_just_pressed("Interact"):
 		player.interact()

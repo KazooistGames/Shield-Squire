@@ -28,10 +28,13 @@ var yield_delay_timer := 0.0
 
 func _physics_process(delta) -> void:
 	
+	if personality.Me.state == personality.Me.State.dead:
+		return
+		
 	swing_cooldown_timer += delta
 	_determine_foe()
 	
-	if Foe:
+	if Foe != null:
 		Yielding = false
 		yield_delay_timer = 0.0
 		
@@ -45,6 +48,7 @@ func _physics_process(delta) -> void:
 	if Yielding or not Foe or not Active:
 		return
 	
+
 	disposition = Foe.global_position - personality.Me.global_position
 		
 
@@ -86,6 +90,12 @@ func _determine_foe():
 			elif _can_see_through_all_concealments(parent) :
 				Foe = parent
 				
+	elif Foe.Team == personality.Me.Team:
+		Foe = null
+				
+	elif Foe.HP <= 0:
+		Foe = null		
+		
 	elif not personality.detected_bodies().has(Foe):
 		Foe = null
 		#Desired_Coordinates = personality.global_position
@@ -93,8 +103,7 @@ func _determine_foe():
 	elif not _can_see_through_all_concealments(Foe):
 		Foe = null
 		
-	elif Foe.state == Foe.State.dead:
-		Foe = null
+
 		#Desired_Coordinates = personality.global_position
 
 
@@ -168,7 +177,7 @@ func set_state(new_state : State):
 			min_state_time = 5
 			max_state_time = 8
 			quick_swing = false
-			swing_range = 36
+			swing_range = 32
 			
 		State.flee:
 			swing_cooldown_period = 3.0

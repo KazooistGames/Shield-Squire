@@ -32,9 +32,11 @@ func _ready() -> void:
 
 func _physics_process(delta : float) -> void:
 	
+	
 	if Me.state == Me.State.dead:
 		return
 		
+	get_current_priority()
 	_position_raycasts()
 	Desired_Coordinates = Active_Behaviour.Desired_Coordinates
 	
@@ -74,7 +76,6 @@ func _climb(delta : float) -> void:
 		Me.left_right = sign(displacement.x)
 	
 	elif is_deadended():
-		print('deadended')
 		Me.left_right *= -1
 		
 
@@ -112,28 +113,31 @@ func _handle_fall():
 
 func get_current_priority() -> Node:
 	
-	var highest_priority_so_far := 0
-	var priority_state : Node = null
+	var highest_priority_so_far := 10
+	var new_priority_state : Node = null
 	
 	for state in Behaviours:
 		state.Active = false
-		
-		if priority_state == null:
-			highest_priority_so_far = state.process_priority
-			priority_state = state
-			
-		elif state.Yielding:
+						
+		if state.Yielding:
 			pass
+			
+		elif new_priority_state == null:
+			highest_priority_so_far = state.process_priority
+			new_priority_state = state
+
 			
 		elif state.Priority > highest_priority_so_far:
 			highest_priority_so_far = state.process_priority
-			priority_state = state
+			new_priority_state = state
 	
 	if Me.state == Me.State.dead:
 		return null
 	
-	priority_state.Active = true
-	return priority_state
+	new_priority_state.Active = true
+	Active_Behaviour = new_priority_state
+	
+	return new_priority_state
 
 
 func is_deadended() -> bool:

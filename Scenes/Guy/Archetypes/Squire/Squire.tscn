@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ue3w37js046f"]
+[gd_scene load_steps=11 format=3 uid="uid://ue3w37js046f"]
 
 [ext_resource type="PackedScene" uid="uid://b8xpmmlbv64kh" path="res://Scenes/Guy/Guy.tscn" id="1_umaqs"]
 [ext_resource type="PackedScene" uid="uid://b33yi6bb57fef" path="res://Scenes/Guy/Archetypes/Swordsman/States/attack.tscn" id="2_kjnpt"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dfyuiajfkc0h" path="res://Scenes/Guy/Archetypes/Swordsman/States/stance.tscn" id="6_6mcwp"]
 [ext_resource type="Texture2D" uid="uid://cqdw47pv7u7a4" path="res://Scenes/Guy/Archetypes/Squire/Sheets/squire_run-Sheet.png" id="7_sluy1"]
 [ext_resource type="Texture2D" uid="uid://djph2vvtbxyhc" path="res://Scenes/Guy/Archetypes/Squire/Sheets/squire_idle-Sheet.png" id="9_5xlvm"]
+[ext_resource type="PackedScene" uid="uid://dixwxvu82x38p" path="res://Scenes/Guy/Archetypes/Squire/States/die.tscn" id="10_sluy1"]
 
 [node name="Squire" instance=ExtResource("1_umaqs")]
 
@@ -26,3 +27,5 @@ sprite_sheet = ExtResource("7_sluy1")
 
 [node name="stance" parent="Sprite2D" index="4" instance=ExtResource("6_6mcwp")]
 sprite_sheet = ExtResource("9_5xlvm")
+
+[node name="die" parent="Sprite2D" index="5" instance=ExtResource("10_sluy1")]

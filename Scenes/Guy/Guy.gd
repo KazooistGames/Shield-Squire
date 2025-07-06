@@ -5,7 +5,7 @@ const coyote_period := 0.20
 const acceleration := 480
 const top_speed := 60
 const charge_timer_max := 1.0
-const charge_timer_min := 0.20
+const charge_timer_min := 0.10
 
 enum State{
 	ready,
@@ -201,7 +201,7 @@ func ready() -> bool:
 
 func _handle_hit(guy : CharacterBody2D):
 	
-	var power = sqrt(charge_timer/charge_timer_max) * 100
+	var power = sqrt(charge_timer/charge_timer_max) * 120
 	var impulse = Vector2(facing_direction, 0) * power
 	guy.shove(impulse)
 	guy.damage(charge_timer/charge_timer_max * 100)
@@ -209,7 +209,7 @@ func _handle_hit(guy : CharacterBody2D):
 	
 func _handle_parry(guy : CharacterBody2D):
 	
-	var impulse = Vector2(facing_direction, 0) * 100
+	var impulse = Vector2(facing_direction, 0) * 120
 	guy.shove(impulse)
 	guy.cooldown_timer = max(charge_timer * 2.0, guy.cooldown_timer)
 
