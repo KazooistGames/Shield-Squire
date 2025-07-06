@@ -8,6 +8,7 @@ const default_run_frames_per_second := 15
 @onready var parent : CharacterBody2D = get_parent()
 
 var active_state : Node = null
+#var paused := false
 
 signal looped(String)
 signal finished(String)
@@ -16,10 +17,13 @@ signal finished(String)
 func _ready() -> void:
 	
 	set_animation_state('stance')
+	parent.died.connect(_handle_death)
 	
 
 func _process(delta : float) -> void:
 	
+	#if paused:
+		#return
 	_determine_active_state()
 	_determine_active_frame_texture()
 	
@@ -36,6 +40,9 @@ func _determine_active_frame_texture() -> void:
 
 func _determine_active_state() -> void:
 
+	if parent.HP <= 0:
+		set_animation_state('die')
+		return
 	
 	match(parent.state):
 	
@@ -65,6 +72,26 @@ func _determine_active_state() -> void:
 			set_animation_state('stance')
 
 
+
+
+func _handle_state_finished():
+	
+	finished.emit(active_state.name)
+	
+	if active_state.name == 'attack':
+		parent.recover()
+	
+	
+func _handle_state_looped():
+	
+	looped.emit(active_state.name)
+	
+	
+func _handle_death():
+	
+	set_animation_state('die')
+	#paused = true
+
 func set_animation_state(state_name : StringName) -> void:
 	
 	var new_state : Node = find_child(state_name, false)
@@ -81,18 +108,3 @@ func set_animation_state(state_name : StringName) -> void:
 	active_state.play()
 	active_state.finished.connect(_handle_state_finished)
 	active_state.looped.connect(_handle_state_looped)
-
-
-func _handle_state_finished():
-	
-	finished.emit(active_state.name)
-	
-	if active_state.name == 'attack':
-		parent.recover()
-	
-	
-func _handle_state_looped():
-	
-	looped.emit(active_state.name)
-	
-	

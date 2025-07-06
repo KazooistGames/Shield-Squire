@@ -26,15 +26,15 @@ color = Color(0.784314, 0, 0, 1)
 [node name="strength_backdrop" type="ColorRect" parent="CanvasLayer"]
 layout_direction = 2
 offset_left = 10.0
-offset_top = 15.0
+offset_top = 13.0
 offset_right = 110.0
-offset_bottom = 17.0
+offset_bottom = 15.0
 color = Color(0.392157, 0.392157, 0.392157, 0.392157)
 
 [node name="strength_bar" type="ColorRect" parent="CanvasLayer"]
 layout_direction = 2
 offset_left = 10.0
-offset_top = 15.0
+offset_top = 13.0
 offset_right = 60.0
-offset_bottom = 17.0
-color = Color(1, 0.996078, 1, 0.784314)
+offset_bottom = 15.0
+color = Color(0.9, 0.9, 0.9, 1)

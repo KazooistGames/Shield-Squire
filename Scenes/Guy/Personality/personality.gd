@@ -33,7 +33,6 @@ func _ready() -> void:
 func _physics_process(delta : float) -> void:
 	
 	_position_raycasts()
-	
 	Desired_Coordinates = Active_Behaviour.Desired_Coordinates
 	
 	if cached_coordinates != Desired_Coordinates:
@@ -41,22 +40,23 @@ func _physics_process(delta : float) -> void:
 		cached_coordinates = Desired_Coordinates
 		
 	displacement = Desired_Coordinates - global_position
-	#print(displacement)
 	
 	if Deadbanded:
 		pass
+		
 	if inside_deadband():
 		Me.left_right = 0
 		Deadbanded = true
+		
 	elif displacement.y <= -deadband_radius: #start dropping to target
 		_climb(delta)
+		
 	elif abs(displacement.x) > deadband_radius:
 		Me.left_right = sign(displacement.x)
+		
 	elif displacement.y > -deadband_radius:
 		_descend(delta)
-
-	
-		
+			
 		
 func _climb(delta : float) -> void:
 	
@@ -81,6 +81,28 @@ func _descend(delta : float) -> void:
 		return
 	else:
 		Me.duck()
+		
+		
+func _position_raycasts():
+	
+	across.target_position.x = Me.facing_direction * 48
+	
+	if across.is_colliding():
+		var point := across.get_collision_point()
+		down.global_position.x = point.x
+		down.global_position.y = point.y - down.target_position.y/2.0
+		
+	else:
+		down.position.x = across.target_position.x
+		down.position.y = -down.target_position.y/2.0
+		
+
+func _handle_fall():
+	
+	if displacement.y < -deadband_radius: #start dropping to target
+		Me.jump()
+	elif abs(displacement.y) < deadband_radius:
+		Me.jump()
 
 
 func get_current_priority() -> Node:
@@ -89,6 +111,7 @@ func get_current_priority() -> Node:
 	var priority_state : Node = null
 	
 	for state in Behaviours:
+		state.Active = false
 		
 		if priority_state == null:
 			highest_priority_so_far = state.process_priority
@@ -101,6 +124,7 @@ func get_current_priority() -> Node:
 			highest_priority_so_far = state.process_priority
 			priority_state = state
 	
+	priority_state.Active = true
 	return priority_state
 
 
@@ -123,6 +147,13 @@ func detected_bodies() -> Array[Node2D]:
 	overlapping_bodies.erase(Me)
 	return overlapping_bodies
 	
+	
+func detected_areas() -> Array[Area2D]:
+	
+	var overlapping_areas : Array[Area2D] = get_overlapping_areas()
+	overlapping_areas.erase(Me.hitbox)
+	overlapping_areas.erase(Me.hurtbox)
+	return overlapping_areas
 
 func inside_deadband() -> bool:
 	
@@ -142,26 +173,7 @@ func get_slide_length():
 	return average_speed * time_to_stop
 
 
-func _position_raycasts():
-	
-	across.target_position.x = Me.facing_direction * 48
-	
-	if across.is_colliding():
-		var point := across.get_collision_point()
-		down.global_position.x = point.x
-		down.global_position.y = point.y - down.target_position.y/2.0
-		
-	else:
-		down.position.x = across.target_position.x
-		down.position.y = -down.target_position.y/2.0
-		
 
-func _handle_fall():
-	
-	if displacement.y < -deadband_radius: #start dropping to target
-		Me.jump()
-	elif abs(displacement.y) < deadband_radius:
-		Me.jump()
 		
 
 

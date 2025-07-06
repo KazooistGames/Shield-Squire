@@ -57,19 +57,31 @@ func _process_recovering(delta : float) -> void:
 	for guy in guys_marked_for_hit:
 		
 		if guy.check_sprite_collision(global_position, collider.shape.size):
+			
+			if guy == null:
+				continue
+				
 			landed_hit.emit(guy)
 		
 	guys_marked_for_hit.clear()
 		
 	for guy in guys_marked_for_parry:
+		
+		if guy == null:
+			continue
+			
 		parried.emit(guy)
 		
 	guys_marked_for_parry.clear()
 	
 	for item in items_marked_for_smack:
+		
+		if item == null:
+			continue
+			
 		var disposition = (item.global_position - global_position).normalized()
-		var direction = Vector2(sign(disposition.x), -1).normalized()
-		var magnitude = (parent.charge_timer / parent.charge_timer_max) * 250
+		var direction = Vector2(parent.facing_direction, -1).normalized()
+		var magnitude = 250
 		item.smack(direction * magnitude)
 
 	items_marked_for_smack.clear()

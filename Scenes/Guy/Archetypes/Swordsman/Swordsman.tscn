@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://db5fff6v2i5p7"]
+[gd_scene load_steps=11 format=3 uid="uid://db5fff6v2i5p7"]
 
 [ext_resource type="PackedScene" uid="uid://b8xpmmlbv64kh" path="res://Scenes/Guy/Guy.tscn" id="1_8rpvy"]
 [ext_resource type="PackedScene" uid="uid://b33yi6bb57fef" path="res://Scenes/Guy/Archetypes/Swordsman/States/attack.tscn" id="2_2jugv"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://4ye72t3jj42a" path="res://Scenes/Guy/Archetypes/Swordsman/States/recover.tscn" id="4_0x861"]
 [ext_resource type="PackedScene" uid="uid://c2ku86lvb3eoc" path="res://Scenes/Guy/Archetypes/Swordsman/States/run.tscn" id="5_mmmqd"]
 [ext_resource type="PackedScene" uid="uid://dfyuiajfkc0h" path="res://Scenes/Guy/Archetypes/Swordsman/States/stance.tscn" id="6_u8flm"]
+[ext_resource type="Texture2D" uid="uid://bfjx4ur3gsug8" path="res://Scenes/Guy/Archetypes/Swordsman/Sheets/swordsman_die-Sheet.png" id="7_0x861"]
+[ext_resource type="Script" uid="uid://ccjfs1u8sjmhy" path="res://Scenes/Guy/Personality/behaviours/beahviour_patrol.gd" id="9_21dxl"]
 
 [node name="Swordsman" instance=ExtResource("1_8rpvy")]
 
@@ -21,7 +23,16 @@
 
 [node name="stance" parent="Sprite2D" index="4" instance=ExtResource("6_u8flm")]
 
+[node name="die" parent="Sprite2D" index="5" instance=ExtResource("6_u8flm")]
+sprite_sheet = ExtResource("7_0x861")
+frames_per_second = 4
+last_frame_index = 4
+looping = false
+
 [node name="Personality" parent="." index="4" instance=ExtResource("2_5v3y7")]
 
 [node name="_Fight" type="Node" parent="Personality" index="3"]
 script = ExtResource("3_25n24")
+
+[node name="_Patrol" type="Node" parent="Personality" index="5"]
+script = ExtResource("9_21dxl")

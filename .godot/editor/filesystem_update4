@@ -1,7 +1,11 @@
-res://Title.tscn
+res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn
 res://Scenes/Guy/Personality/personality.gd
-res://Scenes/Guy/Guy.tscn
+res://Scenes/Guy/Animation/sprite_2d.gd
 res://Scenes/Guy/Guy.gd
-res://Scenes/Guy/Personality/behaviours/behaviour_fight.gd
+res://Title.tscn
+res://Scenes/Guy/Guy.tscn
 res://Scenes/Items/Fruit/Fruit.tscn
 res://Scenes/Guy/Personality/Personality.tscn
+res://Scenes/Guy/Boxes/hit_box.tscn
+res://Scenes/HMI/HMI.tscn
+res://Scenes/Guy/Personality/behaviours/behaviour_fight.gd
