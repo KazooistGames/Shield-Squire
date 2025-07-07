@@ -13,6 +13,10 @@ var min_state_time = 5
 var max_state_time = 10
 
 
+func _ready() -> void:
+	
+	state_timer = max_state_time
+
 func _physics_process(delta: float) -> void:
 	
 	if personality.Me.state == personality.Me.State.dead:
@@ -20,7 +24,11 @@ func _physics_process(delta: float) -> void:
 	
 	if not Active:
 		return
+		
+	_state_transitions(delta)
 
+	if personality.Deadbanded:
+		state_completed = true
 	
 	
 func _state_transitions(delta):
@@ -51,24 +59,27 @@ func set_state(new_state : State):
 	match state:
 		
 		State.explore:
-			min_state_time = 5
+			min_state_time = randi_range(5, 8)
 			max_state_time = 10
 			Desired_Coordinates = get_random_point_near_me()
 		State.hide:
-			min_state_time = 10
+			min_state_time = randi_range(5, 8)
 			max_state_time = 10
 
 
-func get_random_point_near_me():
+func get_random_point_near_me() -> Vector2:
 	
 	var space_state : PhysicsDirectSpaceState2D = personality.Me.get_world_2d().direct_space_state
 	# use global coordinates, not local to node
-	var x_offset = randi_range(48, 120)
+	var x_offset = randi_range(48, 120) if randf() < 0.5 else randi_range(-48, -120)
 	var y_offset = -60
 	var starting_point = personality.Me.global_position + Vector2(x_offset, y_offset)
-	var ending_point = starting_point - Vector2(0, y_offset)
-	var query : PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(Vector2(0, 0), Vector2(50, 100))
+	var ending_point = Vector2(starting_point.x, personality.Me.global_position.y - y_offset)
+	var query : PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(starting_point, ending_point)
 	query.collision_mask = 17
 	var result = space_state.intersect_ray(query)
 	
-	return result['position']
+	if result.has('position'):
+		return result['position']
+	else:
+		return Desired_Coordinates

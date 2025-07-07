@@ -1,58 +1,23 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgbmicstbteog"]
+[gd_scene load_steps=6 format=3 uid="uid://cgbmicstbteog"]
 
 [ext_resource type="PackedScene" uid="uid://cmigagy8anvbt" path="res://Scenes/Wallpaper/wallpaper.tscn" id="1_ax32a"]
 [ext_resource type="PackedScene" uid="uid://db5fff6v2i5p7" path="res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn" id="2_quvj1"]
 [ext_resource type="PackedScene" uid="uid://cvoldq46v0xyn" path="res://Scenes/HMI/HMI.tscn" id="3_quvj1"]
-[ext_resource type="PackedScene" uid="uid://ds7osd76gd16t" path="res://Scenes/Guy/Personality/Personality.tscn" id="4_rbgi3"]
-[ext_resource type="Script" uid="uid://druadp7jmaggc" path="res://Scenes/Guy/Personality/behaviours/behaviour_fight.gd" id="5_g06w4"]
 [ext_resource type="PackedScene" uid="uid://6g65nfclhdfm" path="res://Scenes/Foliage/Tree.tscn" id="5_rg4ux"]
 [ext_resource type="PackedScene" uid="uid://ue3w37js046f" path="res://Scenes/Guy/Archetypes/Squire/Squire.tscn" id="5_yytgh"]
-[ext_resource type="Script" uid="uid://ccjfs1u8sjmhy" path="res://Scenes/Guy/Personality/behaviours/beahviour_patrol.gd" id="6_ti4w6"]
 
 [node name="Title" type="Node2D"]
 
 [node name="Wallpaper" parent="." instance=ExtResource("1_ax32a")]
 
-[node name="Hmi" parent="." instance=ExtResource("3_quvj1")]
+[node name="Hmi" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_quvj1")]
+player = NodePath("../Player")
 
-[node name="Squire" parent="." instance=ExtResource("5_yytgh")]
-position = Vector2(-200, 40)
-
-[node name="Personality" parent="Squire" instance=ExtResource("4_rbgi3")]
-
-[node name="_fight" type="Node" parent="Squire/Personality"]
-script = ExtResource("5_g06w4")
-
-[node name="_patrol" type="Node" parent="Squire/Personality"]
-script = ExtResource("6_ti4w6")
-
-[node name="Squire2" parent="." instance=ExtResource("5_yytgh")]
-position = Vector2(-150, 40)
-
-[node name="Personality" parent="Squire2" instance=ExtResource("4_rbgi3")]
-
-[node name="_fight" type="Node" parent="Squire2/Personality"]
-script = ExtResource("5_g06w4")
-
-[node name="_patrol" type="Node" parent="Squire2/Personality"]
-script = ExtResource("6_ti4w6")
-
-[node name="Squire3" parent="." instance=ExtResource("5_yytgh")]
-position = Vector2(-100, 40)
-
-[node name="Personality" parent="Squire3" instance=ExtResource("4_rbgi3")]
-
-[node name="_fight" type="Node" parent="Squire3/Personality"]
-script = ExtResource("5_g06w4")
-
-[node name="_patrol" type="Node" parent="Squire3/Personality"]
-script = ExtResource("6_ti4w6")
+[node name="Player" parent="." instance=ExtResource("5_yytgh")]
+position = Vector2(-220, 40)
 
 [node name="Swordsman" parent="." instance=ExtResource("2_quvj1")]
 position = Vector2(200, 38)
-
-[node name="Swordsman2" parent="." instance=ExtResource("2_quvj1")]
-position = Vector2(100, 38)
 
 [node name="Tree" parent="." instance=ExtResource("5_rg4ux")]
 position = Vector2(-150, 60)
@@ -65,10 +30,3 @@ position = Vector2(50, 60)
 
 [node name="Tree4" parent="." instance=ExtResource("5_rg4ux")]
 position = Vector2(150, 60)
-
-[node name="Swordsman4" parent="." instance=ExtResource("2_quvj1")]
-position = Vector2(150, 38)
-
-[node name="Player" parent="." instance=ExtResource("5_yytgh")]
-visible = false
-position = Vector2(-220, 40)

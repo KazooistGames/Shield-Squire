@@ -6,6 +6,7 @@ const acceleration := 480
 const top_speed := 60
 const charge_timer_max := 1.0
 const charge_timer_min := 0.10
+const energy_recharge_rate := 25.0
 
 enum State{
 	ready,
@@ -19,7 +20,7 @@ enum State{
 @export var Team := 0
 @export var state : State = State.ready
 @export var HP := 100
-@export var Strength := 100.0
+@export var Energy := 100.0
 @export var left_right := 0
 @export var Concealments : Array[Area2D] = []
 
@@ -52,22 +53,55 @@ func _ready() -> void:
 	hitbox.landed_hit.connect(_handle_hit)
 	hitbox.parried.connect(_handle_parry)
 	
-
-func _process(delta : float) -> void:
 	
-	facing_locked = state == State.attacking or state == State.sliding
+func _physics_process(delta : float) -> void:
+	
+	if left_right == 0 and is_on_floor() and state == State.ready:
+		Energy += delta * energy_recharge_rate
+	
+	Energy = clampf(Energy, 0, 100)
 	
 	if left_right != 0 and not facing_locked:
-		facing_direction = left_right
+		facing_direction = left_right	
 		
+	facing_locked = state != State.ready and state != State.charging
+	
 	if duck_debounce < duck_duration:
 		duck_debounce += delta
 		collision_mask = 1
+		
 	else:
 		collision_mask = 17
-
-	match state:
 		
+	if not is_on_floor():
+		velocity.y += 980 * delta	
+	
+	
+	_process_velocity(delta)	
+	move_and_slide()		
+	_coyote(delta)		
+	_process_state(delta)
+
+
+func _process_velocity(delta : float) -> void:
+	speed = top_speed * lerpf(0.5, 1.0, Energy/100)
+	cooldown_to_charge_ratio = lerpf(2.0, 1.0, Energy/100)
+	
+	var speed_ratio: float = clamp(1.0 - abs(velocity.x/speed), 0.5, 1.0)
+	var real_accel : float = acceleration * speed_ratio
+	
+	if state == State.ready:
+		var target_speed = left_right * speed
+		velocity.x = move_toward(velocity.x, target_speed, real_accel * delta)
+		
+	elif is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, real_accel * delta)
+	
+	
+func _process_state(delta : float) -> void:
+	
+	match state:
+	
 		State.charging:
 			charge_timer += delta
 			
@@ -88,30 +122,6 @@ func _process(delta : float) -> void:
 			 
 			if velocity.x == 0:
 				state = State.ready
-		
-
-func _physics_process(delta : float) -> void:
-	
-	if not is_on_floor():
-		velocity.y += 980 * delta
-		
-	move_and_slide()	
-		
-	_coyote(delta)
-	speed = top_speed * lerpf(0.5, 1.0, Strength/100)
-	cooldown_to_charge_ratio = lerpf(1.5, 1.0, Strength/100)
-	
-	var speed_ratio: float = clamp(1.0 - abs(velocity.x/speed), 0.5, 1.0)
-	var real_accel : float = acceleration * speed_ratio
-	
-	if state == State.ready:
-		var target_speed = left_right * speed
-		velocity.x = move_toward(velocity.x, target_speed, real_accel * delta)
-		
-	elif is_on_floor():
-		velocity.x = move_toward(velocity.x, 0, real_accel * delta)
-		
-
 
 
 func _coyote(delta):
@@ -134,7 +144,7 @@ func jump() -> bool:
 		return false
 
 	coyote_timer = coyote_period
-	sap(2)
+	sap(10)
 	velocity.y = -sqrt(jump_height * 1960)
 	jumped.emit()
 	return true
@@ -173,7 +183,7 @@ func release() -> bool:
 		state = State.attacking
 		cooldown_timer = charge_timer * cooldown_to_charge_ratio
 		var charge_power = charge_timer / charge_timer_max
-		sap(roundi(charge_power * 4))
+		sap(roundi(charge_power * 25))
 		var impulse = Vector2(facing_direction, 0) * charge_power * 100
 		shove(impulse)
 		return true
@@ -209,9 +219,8 @@ func _handle_hit(guy : CharacterBody2D):
 	
 func _handle_parry(guy : CharacterBody2D):
 	
-	var impulse = Vector2(facing_direction, 0) * 120
+	var impulse = Vector2(facing_direction, 0) * 96
 	guy.shove(impulse)
-	guy.cooldown_timer = max(charge_timer * 2.0, guy.cooldown_timer)
 
 		
 func check_sprite_collision(coordinates : Vector2, bounds : Vector2, offset : Vector2 = Vector2.ZERO) -> bool:
@@ -266,6 +275,8 @@ func turn_toward(object : Node2D):
 	
 	if facing_locked:
 		return
+	else:
+		facing_locked = true
 		
 	var x_disposition = object.global_position.x - global_position.x
 	facing_direction = sign(x_disposition)
@@ -273,16 +284,16 @@ func turn_toward(object : Node2D):
 	
 func sap(value : float):
 	
-	if Strength <= 0:
+	if Energy <= 0:
 		damage(value)
 		
-	elif value > Strength:
-		var diff = value - Strength
-		Strength = 0
+	elif value > Energy:
+		var diff = value - Energy
+		Energy = 0
 		damage(diff)
 		
 	else:
-		Strength -= value
+		Energy -= value
 
 
 func interact():

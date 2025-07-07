@@ -22,7 +22,7 @@ var max_state_time = 10
 
 var quick_swing := false
 var swing_range = 20
-var yield_delay_period := 1.0
+var yield_delay_period := 2.0
 var yield_delay_timer := 0.0
 
 
@@ -102,6 +102,7 @@ func _determine_foe():
 		
 	elif not _can_see_through_all_concealments(Foe):
 		Foe = null
+		print('foe concealed')
 		
 
 		#Desired_Coordinates = personality.global_position
@@ -149,19 +150,19 @@ func _can_see_through_all_concealments(other_guy : CharacterBody2D) -> bool:
 	
 	
 func calc_next_state():
-	
-	var energy_ratio = personality.Me.Strength / 100.0
-	var flee_chance = lerpf(0.1, 0.0, energy_ratio)
-	
+
+	var energy_ratio = personality.Me.Energy / 100.0
+	var wait_chance = lerpf(1.0, 0.0, energy_ratio)
+	var flee_chance = 0.05
 	var random = randf()
-	
+
 	if randf() <= flee_chance:
 		return State.flee
-	elif randf() <= 0.5:
+	elif randf() <= wait_chance:
 		return State.wait
 	else:
 		return State.charge
-	
+
 	
 func set_state(new_state : State):
 	

@@ -26,7 +26,7 @@ var cached_coordinates := Vector2.ZERO
 
 func _ready() -> void:
 	
-	Active_Behaviour = get_current_priority()
+	Active_Behaviour = _get_current_priority()
 	Me.fell.connect(_handle_fall)
 
 
@@ -36,7 +36,7 @@ func _physics_process(delta : float) -> void:
 	if Me.state == Me.State.dead:
 		return
 		
-	get_current_priority()
+	_get_current_priority()
 	_position_raycasts()
 	Desired_Coordinates = Active_Behaviour.Desired_Coordinates
 	
@@ -111,7 +111,7 @@ func _handle_fall():
 		Me.jump()
 
 
-func get_current_priority() -> Node:
+func _get_current_priority() -> Node:
 	
 	var highest_priority_so_far := 10
 	var new_priority_state : Node = null
@@ -126,7 +126,6 @@ func get_current_priority() -> Node:
 			highest_priority_so_far = state.process_priority
 			new_priority_state = state
 
-			
 		elif state.Priority > highest_priority_so_far:
 			highest_priority_so_far = state.process_priority
 			new_priority_state = state

@@ -54,5 +54,5 @@ func _physics_process(delta):
 func _update_hud(delta):
 	
 	hp_bar.size.x = player.HP
-	strength_bar.size.x = player.Strength
+	strength_bar.size.x = player.Energy
 	

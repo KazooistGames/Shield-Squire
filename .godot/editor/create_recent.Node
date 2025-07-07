@@ -1,5 +1,6 @@
-Node
 Sprite2D
+PointLight2D
+Node
 CollisionShape2D
 Area2D
 RigidBody2D
@@ -11,4 +12,3 @@ Node2D
 RayCast2D
 CollisionPolygon2D
 Camera2D
-SubViewport

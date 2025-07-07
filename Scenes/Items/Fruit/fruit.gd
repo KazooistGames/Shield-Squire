@@ -19,5 +19,5 @@ func smack(impulse : Vector2):
 	
 func use(guy : CharacterBody2D):
 	
-	guy.Strength = clampf(guy.Strength + energy, 0, 100)
+	guy.Energy = clampf(guy.Energy + energy, 0, 100)
 	queue_free()
