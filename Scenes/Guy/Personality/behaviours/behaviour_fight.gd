@@ -64,7 +64,9 @@ func _physics_process(delta) -> void:
 			Desired_Coordinates = personality.Me.global_position - disposition.normalized() * 200
 					
 		State.wait:
-			personality.Me.turn_toward(Foe)
+			
+			if personality.Me.left_right == 0:
+				personality.Me.turn_toward(Foe)
 			
 
 func _determine_foe():

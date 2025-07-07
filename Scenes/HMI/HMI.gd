@@ -6,7 +6,7 @@ extends Camera2D
 
 @onready var hp_bar : ColorRect = $CanvasLayer/hp_bar
 @onready var strength_bar : ColorRect = $CanvasLayer/strength_bar
-
+@onready var fov_light : PointLight2D = $PointLight2D
 
 func _process(delta : float) -> void:
 
@@ -14,9 +14,11 @@ func _process(delta : float) -> void:
 		_movement_inputs(delta)
 		_combat_inputs(delta)
 		_update_hud(delta)
+		fov_light.global_position = player.global_position
 	
 	if Input.is_action_just_pressed("Interact"):
 		player.interact()
+		
 
 
 func _movement_inputs(_delta : float) -> void:

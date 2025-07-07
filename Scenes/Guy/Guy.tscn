@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8xpmmlbv64kh"]
+[gd_scene load_steps=8 format=3 uid="uid://b8xpmmlbv64kh"]
 
 [ext_resource type="Script" uid="uid://b8g5l11p4we4p" path="res://Scenes/Guy/Guy.gd" id="1_jkuat"]
 [ext_resource type="PackedScene" uid="uid://bmcqnvjikwaio" path="res://Scenes/Guy/Boxes/hit_box.tscn" id="2_etdvk"]
@@ -8,6 +8,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rcyd8"]
 size = Vector2(6, 3)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ejd3f"]
+light_mode = 2
 
 [node name="Guy" type="CharacterBody2D" groups=["Guy"]]
 collision_layer = 2
@@ -23,6 +26,7 @@ debug_color = Color(0.307455, 0.627115, 0, 0.42)
 position = Vector2(-8, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_ejd3f")
 texture = ExtResource("3_vx5md")
 region_enabled = true
 region_rect = Rect2(0, 0, 24, 24)

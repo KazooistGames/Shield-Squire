@@ -1,5 +1,7 @@
-Sprite2D
+LightOccluder2D
 PointLight2D
+CanvasModulate
+Sprite2D
 Node
 CollisionShape2D
 Area2D
@@ -11,4 +13,3 @@ MarginContainer
 Node2D
 RayCast2D
 CollisionPolygon2D
-Camera2D

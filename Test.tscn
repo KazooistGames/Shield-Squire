@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1twj0boet1ii"]
+
+[ext_resource type="PackedScene" uid="uid://cmigagy8anvbt" path="res://Scenes/Wallpaper/wallpaper.tscn" id="1_njov2"]
+[ext_resource type="PackedScene" uid="uid://db5fff6v2i5p7" path="res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn" id="2_2au82"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_njov2"]
+light_mode = 2
+
+[sub_resource type="Gradient" id="Gradient_2au82"]
+offsets = PackedFloat32Array(0.7, 0.754839)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aq4fw"]
+gradient = SubResource("Gradient_2au82")
+fill = 1
+fill_from = Vector2(0.504274, 0.508547)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_njov2"]
+polygon = PackedVector2Array(-1, -10, -1, -6.6, -3.3, -5, -5, -5, -5, -1.4, -2.7, -0.3, -5, 3.7, -5, 12, -2, 12, -1, 9, -1, 5, 1, 5, 2, 7, 2, 9, 3, 12, 6, 12, 6, 5, 3, 1, 7, 0, 7, -3.5, 2.5, -6.9, 3, -7.8, 3, -10)
+
+[node name="Test" type="Node2D"]
+
+[node name="Wallpaper" parent="." instance=ExtResource("1_njov2")]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.783523, 0.783523, 0.783523, 1)
+
+[node name="Swordsman" parent="." instance=ExtResource("2_2au82")]
+position = Vector2(56, 47)
+
+[node name="Sprite2D" parent="Swordsman" index="2"]
+material = SubResource("CanvasItemMaterial_njov2")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-7, 27)
+scale = Vector2(2.5, 2.5)
+shadow_enabled = true
+shadow_filter = 1
+texture = SubResource("GradientTexture2D_aq4fw")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+show_behind_parent = true
+position = Vector2(13, 45)
+occluder = SubResource("OccluderPolygon2D_njov2")
+
+[editable path="Swordsman"]

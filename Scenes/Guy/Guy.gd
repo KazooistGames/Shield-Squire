@@ -3,7 +3,7 @@ extends CharacterBody2D
 const duck_duration := 0.1
 const coyote_period := 0.20
 const acceleration := 480
-const top_speed := 60
+const top_speed := 48
 const charge_timer_max := 1.0
 const charge_timer_min := 0.10
 const energy_recharge_rate := 25.0
@@ -273,10 +273,8 @@ func is_facing(object : Node2D) -> bool:
 	
 func turn_toward(object : Node2D):
 	
-	if facing_locked:
+	if left_right != 0:
 		return
-	else:
-		facing_locked = true
 		
 	var x_disposition = object.global_position.x - global_position.x
 	facing_direction = sign(x_disposition)

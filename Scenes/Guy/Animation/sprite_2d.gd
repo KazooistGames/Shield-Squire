@@ -3,7 +3,7 @@ extends Sprite2D
 const sprite_dimensions := Vector2(24,24)
 
 const pixels_per_run_frame := 5
-const default_run_frames_per_second := 15
+const default_run_frames_per_second := 12
 
 @onready var parent : CharacterBody2D = get_parent()
 
