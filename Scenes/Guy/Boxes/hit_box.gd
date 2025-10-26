@@ -1,6 +1,7 @@
+@tool
 extends Area2D
 
-@export var Position_Offset = 8
+@export var Position_Offset : Vector2 = Vector2(8, 0)
 
 @onready var parent : CharacterBody2D = get_parent()
 @onready var collider : CollisionShape2D = $CollisionShape2D
@@ -14,11 +15,9 @@ signal landed_hit(CharacterBody2D)
 
 
 func _process(delta : float) -> void:
-	
-	position.x = Position_Offset * parent.facing_direction
-	
+	position = Position_Offset
+	position.x *= parent.facing_direction
 	match parent.state:
-		
 		parent.State.attacking:
 			_process_attacking(delta)
 			
@@ -28,54 +27,40 @@ func _process(delta : float) -> void:
 		_:
 			pass
 			
-
+			
 func _process_attacking(delta : float) -> void:
-
 	var colliding_areas : Array[Area2D] = get_overlapping_areas()	
-
 	for area in colliding_areas:
-		var object = area.get_parent()
-		
+		var object = area.get_parent()		
 		if not parent.is_facing(object):
 			pass
 		elif object is CharacterBody2D:
 			_handle_guy_overlap(object, area)
 			
-	var colliding_bodies : Array[Node2D] = get_overlapping_bodies()
-	
-	for body in colliding_bodies:
-		
+	var colliding_bodies : Array[Node2D] = get_overlapping_bodies()	
+	for body in colliding_bodies:		
 		if not parent.is_facing(body):
-			pass
-			
+			pass						
 		elif body.collision_layer & 512 >= 1:
 			_handle_item_overlap(body)
 
 					
 func _process_recovering(delta : float) -> void:
-	
-	for guy in guys_marked_for_hit:
+	for guy in guys_marked_for_hit:		
+		if guy == null:
+			continue
+						
+		landed_hit.emit(guy)
 		
-		if guy.check_sprite_collision(global_position, collider.shape.size):
-			
-			if guy == null:
-				continue
-				
-			landed_hit.emit(guy)
-		
-	guys_marked_for_hit.clear()
-		
-	for guy in guys_marked_for_parry:
-		
+	guys_marked_for_hit.clear()	
+	for guy in guys_marked_for_parry:	
 		if guy == null:
 			continue
 			
 		parried.emit(guy)
 		
 	guys_marked_for_parry.clear()
-	
 	for item in items_marked_for_smack:
-		
 		if item == null:
 			continue
 			
@@ -88,34 +73,27 @@ func _process_recovering(delta : float) -> void:
 	
 
 func _handle_guy_overlap(other_guy : CharacterBody2D, object_area : Area2D) -> void:
-	
-	
-		if other_guy.state == other_guy.State.dead:
-			pass
-			
-		elif guys_marked_for_parry.has(other_guy):
-			pass
-			
-		elif other_guy.state == other_guy.State.attacking and object_area.collision_layer == 8:
-			guys_marked_for_parry.append(other_guy)
-			
-			if guys_marked_for_hit.has(other_guy):
-				guys_marked_for_hit.erase(other_guy)
-			
-		elif guys_marked_for_hit.has(other_guy):
-			pass
-			
-		elif object_area.collision_layer == 4:
-			guys_marked_for_hit.append(other_guy)
+	if other_guy.state == other_guy.State.dead:
+		pass		
+	elif guys_marked_for_parry.has(other_guy):
+		pass
+	elif other_guy.state == other_guy.State.attacking and object_area.collision_layer == 8:
+		guys_marked_for_parry.append(other_guy)	
+		if guys_marked_for_hit.has(other_guy):
+			guys_marked_for_hit.erase(other_guy)
+		
+	elif guys_marked_for_hit.has(other_guy):
+		pass	
+	elif object_area.collision_layer == 4:
+		guys_marked_for_hit.append(other_guy)
 	
 	
 func _handle_item_overlap(item : PhysicsBody2D) -> void:
-	
 	if items_marked_for_smack.has(item):
 		pass
 	else:
 		items_marked_for_smack.append(item)
-
+		
 
 	
 	

@@ -17,10 +17,10 @@ color = Color(0.881937, 0.881937, 0.881936, 1)
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("5_yytgh")]
-position = Vector2(-220, 40)
+position = Vector2(-220, 61.496)
 
 [node name="Swordsman" parent="." instance=ExtResource("2_quvj1")]
-position = Vector2(200, 38)
+position = Vector2(200, 61.4866)
 
 [node name="Tree" parent="." instance=ExtResource("5_rg4ux")]
 position = Vector2(-150, 60)
@@ -33,3 +33,15 @@ position = Vector2(50, 60)
 
 [node name="Tree4" parent="." instance=ExtResource("5_rg4ux")]
 position = Vector2(150, 60)
+
+[node name="Swordsman2" parent="." instance=ExtResource("2_quvj1")]
+position = Vector2(200, 61.4866)
+
+[node name="Swordsman3" parent="." instance=ExtResource("2_quvj1")]
+position = Vector2(200, 61.4866)
+
+[node name="Squire" parent="." instance=ExtResource("5_yytgh")]
+position = Vector2(-113, 61.4975)
+
+[node name="Squire2" parent="." instance=ExtResource("5_yytgh")]
+position = Vector2(-71, 61.4953)

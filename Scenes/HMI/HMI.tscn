@@ -54,4 +54,4 @@ blend_mode = 2
 shadow_enabled = true
 shadow_filter = 1
 texture = SubResource("GradientTexture2D_gg62j")
-texture_scale = 2.0
+texture_scale = 3.0

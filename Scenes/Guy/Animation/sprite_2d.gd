@@ -1,3 +1,5 @@
+@tool
+
 extends Sprite2D
 
 const sprite_dimensions := Vector2(24,24)
@@ -5,101 +7,42 @@ const sprite_dimensions := Vector2(24,24)
 const pixels_per_run_frame := 5
 const default_run_frames_per_second := 12
 
-@onready var parent : CharacterBody2D = get_parent()
+@export var playback_speed = 1.0
+
+@onready var parent : Guy = get_parent()
 
 var active_state : Node = null
-#var paused := false
 
 signal looped(String)
 signal finished(String)
 
-
-func _ready() -> void:
 	
-	set_animation_state('stance')
-	parent.died.connect(_handle_death)
-	
-
-func _process(delta : float) -> void:
-	
-	#if paused:
-		#return
-	_determine_active_state()
-	_determine_active_frame_texture()
-	
-
-func _determine_active_frame_texture() -> void:
-	
-	texture = active_state.sprite_sheet
-	var x = sprite_dimensions.x * active_state.current_frame_index
-	var y = 0
-	var w = sprite_dimensions.x
-	var h = sprite_dimensions.y
-	region_rect = Rect2(x, y, w, h)
-
-
-func _determine_active_state() -> void:
-
-	if parent.HP <= 0:
-		set_animation_state('die')
-		return
-	
-	match(parent.state):
-	
-		parent.State.ready:
-			flip_h = parent.facing_direction > 0
-			
-			if not parent.is_on_floor():
-				set_animation_state('stance')
-			elif parent.velocity.x == 0:
-				set_animation_state('stance')
-			else:
-				set_animation_state('run')
-				var speed_ratio = abs(parent.velocity.x) / (pixels_per_run_frame  * default_run_frames_per_second)
-				active_state.frames_per_second = 18 * speed_ratio
-				
-		parent.State.charging:
-			flip_h = parent.facing_direction > 0
-			set_animation_state('charge')
-			
-		parent.State.attacking:
-			set_animation_state('attack')
-
-		parent.State.recovering:
-			set_animation_state('recover')
-			
-		parent.State.sliding:
-			set_animation_state('stance')
-
-
+func _physics_process(delta: float) -> void:
+	if active_state != null:	#get exact frame texture based on active state and offset coordinates
+		texture = active_state.sprite_sheet
+		var x = sprite_dimensions.x * active_state.current_frame_index
+		var y = 0
+		var w = sprite_dimensions.x
+		var h = sprite_dimensions.y
+		region_rect = Rect2(x, y, w, h)
 
 
 func _handle_state_finished():
-	
 	finished.emit(active_state.name)
-	
-	if active_state.name == 'attack':
-		parent.recover()
 	
 	
 func _handle_state_looped():
-	
 	looped.emit(active_state.name)
 	
-	
-func _handle_death():
-	
-	set_animation_state('die')
-	#paused = true
 
 func set_animation_state(state_name : StringName) -> void:
-	
 	var new_state : Node = find_child(state_name, false)
-	
-	if new_state == null or new_state == active_state:
+	if new_state == null:
+		print(name + " animation state not found: " + state_name)
 		return
-	
-	if active_state:
+	elif new_state == active_state:
+		return
+	elif active_state:
 		active_state.playing = false
 		active_state.finished.disconnect(_handle_state_finished)
 		active_state.looped.disconnect(_handle_state_looped)

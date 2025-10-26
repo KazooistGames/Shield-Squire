@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 @export var sprite_sheet : CompressedTexture2D = null
@@ -8,19 +9,13 @@ extends Node
 @export var last_frame_index := 0
 @export var looping := true
 
-
 var frame_timer := 0.0
 
 signal looped
 signal finished
 
 
-func _process(delta : float) -> void:
-	
-	_process_sheet_animation(delta)
-	
-
-func _process_sheet_animation(delta : float) -> void:
+func _physics_process(delta : float) -> void:
 	
 	if not playing:
 		frame_timer = 0
@@ -37,12 +32,10 @@ func _process_sheet_animation(delta : float) -> void:
 func _get_next_frame():
 	
 	if current_frame_index != last_frame_index:
-		current_frame_index += 1
-		
+		current_frame_index += 1	
 	elif looping:
 		current_frame_index = first_frame_index
-		looped.emit()
-		
+		looped.emit()	
 	else:
 		playing = false
 		finished.emit()

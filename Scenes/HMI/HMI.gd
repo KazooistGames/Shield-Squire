@@ -9,17 +9,18 @@ extends Camera2D
 @onready var fov_light : PointLight2D = $PointLight2D
 
 func _process(delta : float) -> void:
-
+	
 	if player:
 		_movement_inputs(delta)
 		_combat_inputs(delta)
 		_update_hud(delta)
 		fov_light.global_position = player.global_position
-	
+		_update_bush_transparency()
+		_update_guy_hidden()
+		
 	if Input.is_action_just_pressed("Interact"):
 		player.interact()
 		
-
 
 func _movement_inputs(_delta : float) -> void:
 
@@ -58,3 +59,36 @@ func _update_hud(delta):
 	hp_bar.size.x = player.HP
 	strength_bar.size.x = player.Energy
 	
+
+
+func _update_bush_transparency():
+	
+	var bushes : Array[Node] = get_tree().get_nodes_in_group("Bush")
+	
+	for bush in bushes:
+		bush.Transparent = bush.inhabitants.has(player)
+
+
+func _update_guy_hidden():
+	
+	var guys : Array[Node] = get_tree().get_nodes_in_group("Guy")
+	
+	for guy in guys:
+		
+		if guy == player:
+			pass
+		else:
+			guy.sprite.visible = can_see_through_all_concealments(guy)
+		
+		
+func can_see_through_all_concealments(other_guy : CharacterBody2D) -> bool:
+	
+	for concealment in other_guy.Concealments:
+		
+		if concealment == null:
+			continue
+		elif not player.Concealments.has(concealment):
+			return false
+	
+	return true
+		
