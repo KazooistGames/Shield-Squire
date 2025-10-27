@@ -9,28 +9,25 @@ extends Node
 @export var looping := true
 @export var texture_size : Vector2i = Vector2i(24,24)
 
-var frame_timer := 0.0
+@export var frame_timer := 0.0
 
 signal looped
 signal finished
 
 
 func _physics_process(delta : float) -> void:
-	
 	if not playing:
 		frame_timer = 0
 		return
 		
 	frame_timer += delta
 	var frame_period : float = 1.0 / frames_per_second
-	
 	if frame_timer >= frame_period:
 		frame_timer -= frame_period
 		_get_next_frame()
 	
 
 func _get_next_frame():
-	
 	if current_frame_index != last_frame_index:
 		current_frame_index += 1	
 	elif looping:

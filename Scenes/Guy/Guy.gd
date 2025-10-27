@@ -47,7 +47,7 @@ signal fell
 func _ready() -> void:
 	hitbox.landed_hit.connect(_handle_hit)
 	hitbox.parried.connect(_handle_parry)
-	sprite.finished.connect(_handle_state_finished)
+	sprite.finished.connect(_handle_animation_finished)
 	
 	
 func _physics_process(delta : float) -> void:
@@ -155,7 +155,6 @@ func _process_state(delta : float) -> void:
 
 
 
-		
 
 func jump() -> bool:
 	if coyote_timer >= coyote_period:
@@ -232,11 +231,11 @@ func _handle_parry(guy : CharacterBody2D):
 	guy.shove(impulse)
 
 
-func _handle_state_finished(state_name):
-	if state_name == 'attack':
+func _handle_animation_finished(state_name):
+	
+	if state == State.attacking:
 		recover()
-	elif state_name == 'stab':
-		recover()
+		
 		
 func check_sprite_collision(coordinates : Vector2, bounds : Vector2, offset : Vector2 = Vector2.ZERO) -> bool:
 	var disposition : Vector2 = coordinates - global_position
