@@ -1,4 +1,3 @@
-@tool
 extends Area2D
 
 @export var Position_Offset : Vector2 = Vector2(8, 0)

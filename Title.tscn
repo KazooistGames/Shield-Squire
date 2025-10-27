@@ -14,13 +14,13 @@ color = Color(0.881937, 0.881937, 0.881936, 1)
 [node name="Wallpaper" parent="." instance=ExtResource("1_ax32a")]
 
 [node name="Hmi" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_quvj1")]
-player = NodePath("../Player")
+player = NodePath("../Swordsman")
 
-[node name="Player" parent="." instance=ExtResource("5_yytgh")]
+[node name="squire3" parent="." instance=ExtResource("5_yytgh")]
 position = Vector2(-220, 61.496)
 
 [node name="Swordsman" parent="." instance=ExtResource("2_quvj1")]
-position = Vector2(200, 61.4866)
+position = Vector2(16.4952, 61.424)
 
 [node name="Tree" parent="." instance=ExtResource("5_rg4ux")]
 position = Vector2(-150, 60)

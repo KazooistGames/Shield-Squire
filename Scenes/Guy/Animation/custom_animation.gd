@@ -1,4 +1,3 @@
-@tool
 extends Node
 
 @export var sprite_sheet : CompressedTexture2D = null
@@ -8,6 +7,7 @@ extends Node
 @export var first_frame_index := 0
 @export var last_frame_index := 0
 @export var looping := true
+@export var texture_size : Vector2i = Vector2i(24,24)
 
 var frame_timer := 0.0
 

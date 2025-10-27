@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://db5fff6v2i5p7"]
+[gd_scene load_steps=13 format=3 uid="uid://db5fff6v2i5p7"]
 
 [ext_resource type="PackedScene" uid="uid://b8xpmmlbv64kh" path="res://Scenes/Guy/Guy.tscn" id="1_8rpvy"]
 [ext_resource type="PackedScene" uid="uid://b33yi6bb57fef" path="res://Scenes/Guy/Archetypes/Swordsman/States/attack.tscn" id="2_2jugv"]
@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://c2ku86lvb3eoc" path="res://Scenes/Guy/Archetypes/Swordsman/States/run.tscn" id="5_mmmqd"]
 [ext_resource type="PackedScene" uid="uid://dfyuiajfkc0h" path="res://Scenes/Guy/Archetypes/Swordsman/States/stance.tscn" id="6_u8flm"]
 [ext_resource type="PackedScene" uid="uid://bpcowpvrc2co6" path="res://Scenes/Guy/Archetypes/Swordsman/States/die.tscn" id="7_0x861"]
+[ext_resource type="PackedScene" uid="uid://bsreub1pgkpy5" path="res://Scenes/Guy/Archetypes/Swordsman/States/stab.tscn" id="8_mmmqd"]
 [ext_resource type="Script" uid="uid://ccjfs1u8sjmhy" path="res://Scenes/Guy/Personality/behaviours/beahviour_patrol.gd" id="9_21dxl"]
+[ext_resource type="PackedScene" uid="uid://d4dl5yqfcj4up" path="res://Scenes/Guy/Archetypes/Swordsman/States/stab_charge.tscn" id="9_u8flm"]
 
 [node name="Swordsman" instance=ExtResource("1_8rpvy")]
 Team = 1
@@ -28,6 +30,10 @@ Position_Offset = Vector2(8, -3)
 [node name="stance" parent="Sprite2D" index="4" instance=ExtResource("6_u8flm")]
 
 [node name="die" parent="Sprite2D" index="5" instance=ExtResource("7_0x861")]
+
+[node name="stab" parent="Sprite2D" index="6" instance=ExtResource("8_mmmqd")]
+
+[node name="stab_charge" parent="Sprite2D" index="7" instance=ExtResource("9_u8flm")]
 
 [node name="hurtBox" parent="." index="3"]
 Position_Offset = Vector2(-1, 0)

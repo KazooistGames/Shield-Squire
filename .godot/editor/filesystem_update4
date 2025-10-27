@@ -8,3 +8,7 @@ res://Scenes/Guy/Archetypes/Swordsman/States/run.tscn
 res://Scenes/Guy/Animation/custom_animation.gd
 res://Scenes/Guy/Boxes/hit_box.tscn
 res://Title.tscn
+res://Scenes/Items/Fruit/Fruit.tscn
+res://Scenes/HMI/HMI.tscn
+res://Scenes/Guy/Archetypes/Swordsman/States/stab.tscn
+res://Scenes/Guy/Archetypes/Swordsman/States/stab_charge.tscn

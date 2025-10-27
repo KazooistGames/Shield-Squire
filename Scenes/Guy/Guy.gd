@@ -1,5 +1,3 @@
-@tool
-
 class_name Guy extends CharacterBody2D
 
 const duck_duration := 0.1
@@ -53,8 +51,12 @@ func _ready() -> void:
 	
 	
 func _physics_process(delta : float) -> void:
-	if left_right == 0 and is_on_floor() and state == State.ready:
+	if not is_on_floor() or state != State.ready:
+		pass
+	elif left_right == 0:
 		Energy += delta * energy_recharge_rate
+	else:
+		Energy += delta * energy_recharge_rate / 2.0
 	
 	Energy = clampf(Energy, 0, 100)
 	if left_right != 0 and not facing_locked:
@@ -115,9 +117,9 @@ func _animate_state():
 				sprite.active_state.frames_per_second = 18 * speed_ratio
 		State.charging:
 			sprite.flip_h = facing_direction > 0
-			sprite.set_animation_state('charge')
+			sprite.set_animation_state('stab_charge')
 		State.attacking:
-			sprite.set_animation_state('attack')
+			sprite.set_animation_state('stab')
 		State.recovering:
 			sprite.set_animation_state('recover')
 		State.sliding:
@@ -232,6 +234,8 @@ func _handle_parry(guy : CharacterBody2D):
 
 func _handle_state_finished(state_name):
 	if state_name == 'attack':
+		recover()
+	elif state_name == 'stab':
 		recover()
 		
 func check_sprite_collision(coordinates : Vector2, bounds : Vector2, offset : Vector2 = Vector2.ZERO) -> bool:
