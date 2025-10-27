@@ -6,7 +6,7 @@
 [node name="stab" type="Node2D"]
 script = ExtResource("1_b7wxt")
 sprite_sheet = ExtResource("2_b7wxt")
-frames_per_second = 30
+frames_per_second = 36
 first_frame_index = 4
 last_frame_index = 8
 looping = false

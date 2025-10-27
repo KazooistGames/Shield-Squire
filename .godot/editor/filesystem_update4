@@ -12,3 +12,4 @@ res://Scenes/Items/Fruit/Fruit.tscn
 res://Scenes/HMI/HMI.tscn
 res://Scenes/Guy/Archetypes/Swordsman/States/stab.tscn
 res://Scenes/Guy/Archetypes/Swordsman/States/stab_charge.tscn
+res://Scenes/Guy/Archetypes/Swordsman/States/stab_recover.tscn

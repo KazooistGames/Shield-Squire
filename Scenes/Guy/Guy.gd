@@ -121,7 +121,7 @@ func _animate_state():
 		State.attacking:
 			sprite.set_animation_state('stab')
 		State.recovering:
-			sprite.set_animation_state('recover')
+			sprite.set_animation_state('stab_recover')
 		State.sliding:
 			sprite.set_animation_state('stance')
 	
