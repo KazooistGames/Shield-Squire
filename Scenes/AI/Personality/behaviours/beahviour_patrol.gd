@@ -1,5 +1,4 @@
-extends "res://Scenes/Guy/Personality/behaviours/behaviour.gd"
-
+extends Behaviour
 
 enum State {
 	explore = 0,

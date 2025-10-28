@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ds7osd76gd16t"]
 
-[ext_resource type="Script" uid="uid://de4hdbrtvbst4" path="res://Scenes/Guy/Personality/personality.gd" id="1_wpnd3"]
+[ext_resource type="Script" uid="uid://de4hdbrtvbst4" path="res://Scenes/AI/Personality/personality.gd" id="1_wpnd3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1kdm2"]
 radius = 120.0

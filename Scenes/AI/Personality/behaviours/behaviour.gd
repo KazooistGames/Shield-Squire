@@ -1,3 +1,5 @@
+class_name Behaviour
+
 extends Node
 
 @export var Desired_Coordinates := Vector2.ZERO

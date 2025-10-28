@@ -11,7 +11,7 @@ extends Node
 
 @export var frame_timer := 0.0
 
-signal looped
+signal looped 
 signal finished
 
 

@@ -1,6 +1,4 @@
-extends "res://Scenes/Guy/Personality/behaviours/behaviour.gd"
-
- 
+extends Behaviour
 
 @export var Foe : CharacterBody2D = null
 		
