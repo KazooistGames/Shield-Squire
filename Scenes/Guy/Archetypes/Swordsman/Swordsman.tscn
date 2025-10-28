@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://db5fff6v2i5p7"]
+[gd_scene load_steps=6 format=3 uid="uid://db5fff6v2i5p7"]
 
 [ext_resource type="PackedScene" uid="uid://b8xpmmlbv64kh" path="res://Scenes/Guy/Guy.tscn" id="1_8rpvy"]
+[ext_resource type="Texture2D" uid="uid://cxobu116skjus" path="res://Scenes/Guy/Archetypes/Swordsman/Sheets/swordsman_run-Sheet.png" id="2_3nu5a"]
 [ext_resource type="Texture2D" uid="uid://0tokl0nyx5r7" path="res://Scenes/Guy/Archetypes/Swordsman/Sheets/swordsman_swing-Sheet.png" id="2_a8pqw"]
 [ext_resource type="Script" uid="uid://cjmb2t8shvcb0" path="res://Scenes/Guy/FightingFrames/frame_params.gd" id="2_stp78"]
 [ext_resource type="Texture2D" uid="uid://tmo3ijcibewl" path="res://Scenes/Guy/Archetypes/Swordsman/Sheets/swordsman_stab-Sheet.png" id="3_a8pqw"]
@@ -8,20 +9,20 @@
 [node name="Swordsman" instance=ExtResource("1_8rpvy")]
 Team = 1
 
-[node name="FightingFrames" parent="." index="1" node_paths=PackedStringArray("param_node")]
-texture = ExtResource("2_a8pqw")
-region_rect = Rect2(0, 0, 24, 24)
-sprite_sheet = ExtResource("2_a8pqw")
+[node name="FightingFrames" parent="." index="1"]
+texture = ExtResource("2_3nu5a")
+region_rect = Rect2(48, 0, 24, 24)
+sprite_sheet = ExtResource("2_3nu5a")
 texture_size = Vector2i(24, 24)
+playing = false
 frames_per_second = 12
-frame_timer = 0.05
+frame_timer = 0.0
 first_frame_index = 0
-last_frame_index = 7
-current_frame_index = 0
+last_frame_index = 5
+current_frame_index = 2
 hitbox_disabled = true
 hitbox_positions = Array[Vector2]([Vector2(0, 0)])
-hurtbox_positions = Array[Vector2]([Vector2(2, 2)])
-param_node = NodePath("slash_windup")
+hurtbox_positions = Array[Vector2]([Vector2(-1, 0)])
 
 [node name="stab" type="Node" parent="FightingFrames" index="2"]
 script = ExtResource("2_stp78")
@@ -116,3 +117,10 @@ hitbox_positions = Array[Vector2]([Vector2(0, 0)])
 hurtbox_radius = 4.0
 hurtbox_height = 20.0
 hurtbox_positions = Array[Vector2]([Vector2(2, 2)])
+
+[node name="stance" type="Node" parent="FightingFrames" index="8"]
+script = ExtResource("2_stp78")
+
+[node name="run" type="Node" parent="FightingFrames" index="9"]
+script = ExtResource("2_stp78")
+copy_parent = true
