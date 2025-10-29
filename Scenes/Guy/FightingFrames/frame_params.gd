@@ -5,7 +5,6 @@ extends Node
 
 @export var sprite_sheet : CompressedTexture2D = null
 @export var texture_size : Vector2i = Vector2i(24,24)
-@export var playing := false
 @export var frames_per_second := 3
 @export var first_frame_index := 0
 @export var last_frame_index := 0
@@ -37,18 +36,20 @@ extends Node
 			if sibling is FrameParams:
 				sibling.copy_parent = false
 			
+			
 func _ready():
 	copy_parent = false
 
+
 func _process(delta: float) -> void:
-	
 	if not copy_parent:
+		pass
+	elif get_parent() == null:
 		pass
 	elif get_parent() is FightingFrames:
 		var params = get_parent()
 		sprite_sheet = params.sprite_sheet
 		texture_size = params.texture_size
-		playing = params.playing
 		frames_per_second  = params.frames_per_second
 		first_frame_index  = params.first_frame_index
 		last_frame_index  = params.last_frame_index

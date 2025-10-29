@@ -2,11 +2,12 @@ class_name Guy extends CharacterBody2D
 
 const duck_duration := 0.1
 const coyote_period := 0.20
-const acceleration := 480
+const acceleration := 240
 const top_speed := 48
 const charge_timer_max := 1.0
 const charge_timer_min := 0.20
 const energy_recharge_rate := 25.0
+
 
 enum State{
 	ready,
@@ -24,9 +25,10 @@ enum State{
 @export var left_right := 0
 @export var Concealments : Array[Area2D] = []
 
-@onready var sprite : Sprite2D = $Sprite2D
-@onready var hitbox : Area2D = $hitBox
-@onready var hurtbox : Area2D = $hurtBox
+@onready var sprite : FightingFrames = $FightingFrames
+@onready var hitbox : Area2D = $FightingFrames/hitBox
+@onready var hurtbox : Area2D = $FightingFrames/hurtBox
+@onready var state_label : Label = $Label
 
 var speed := 60.0
 var facing_direction := 1
@@ -43,147 +45,136 @@ signal died
 signal jumped
 signal fell
 
-
 func _ready() -> void:
-	hitbox.landed_hit.connect(_handle_hit)
-	hitbox.parried.connect(_handle_parry)
+	#hitbox.landed_hit.connect(_handle_hit)
+	#hitbox.parried.connect(_handle_parry)
 	sprite.finished.connect(_handle_animation_finished)
-	
+	sprite.play()
+	sprite.set_state('stance')
+	state == State.ready
 	
 func _physics_process(delta : float) -> void:
+	state_label.text = str(state)
+	
 	if not is_on_floor() or state != State.ready:
 		pass
 	elif left_right == 0:
 		Energy += delta * energy_recharge_rate
 	else:
 		Energy += delta * energy_recharge_rate / 2.0
-	
 	Energy = clampf(Energy, 0, 100)
 	if left_right != 0 and not facing_locked:
-		facing_direction = left_right	
-		
+		facing_direction = left_right		
 	facing_locked = state != State.ready and state != State.charging
 	if duck_debounce < duck_duration:
 		duck_debounce += delta
 		collision_mask = 1	
 	else:
 		collision_mask = 17
-	
 	_process_movement(delta)		
 	_animate_state()
 	_process_state(delta)
 
-
 func _process_movement(delta : float) -> void:
 	
+	#jumping
 	if not is_on_floor():
-		velocity.y += 980 * delta	
+		velocity.y += 980 * delta		
 		
+	#acceleration
 	speed = top_speed * lerpf(0.5, 1.0, Energy/100)
 	cooldown_to_charge_ratio = lerpf(2.0, 1.0, Energy/100)
 	var speed_ratio: float = clamp(1.0 - abs(velocity.x/speed), 0.5, 1.0)
 	var real_accel : float = acceleration * speed_ratio
+	
+	#movement
 	if state == State.ready:
 		var target_speed = left_right * speed
 		velocity.x = move_toward(velocity.x, target_speed, real_accel * delta)
 	elif is_on_floor():
-		velocity.x = move_toward(velocity.x, 0, real_accel * delta)
-		
-	move_and_slide()
+		velocity.x = move_toward(velocity.x, 0, real_accel * delta)	
+	move_and_slide()	
 	
+	#Coyote timer
 	if is_on_floor():
 		coyote_timer = 0.0
 		return
 	elif coyote_timer == 0.0:
-		fell.emit()		
-		
+		fell.emit()			
 	coyote_timer += delta
 	
 func _animate_state():
 	if HP <= 0:
-		sprite.set_animation_state('die')
-		return
-
+		sprite.set_state('die')
+		return	
+	sprite.playback_speed = 1.0
 	match(state):
 		State.ready:
 			sprite.flip_h = facing_direction > 0
 			if not is_on_floor():
-				sprite.set_animation_state('stance')
+				sprite.set_state('stance')
 			elif velocity.x == 0:
-				sprite.set_animation_state('stance')
+				sprite.set_state('stance')
 			else:
-				sprite.set_animation_state('run')
-				var speed_ratio = abs(velocity.x) / (sprite.pixels_per_run_frame  * sprite.default_run_frames_per_second)
-				sprite.active_state.frames_per_second = 18 * speed_ratio
+				sprite.set_state('run')
+				var speed_ratio = abs(velocity.x) / top_speed
+				sprite.playback_speed = speed_ratio
 		State.charging:
 			sprite.flip_h = facing_direction > 0
-			sprite.set_animation_state('stab_charge')
+			sprite.set_state('slash_windup')
 		State.attacking:
-			sprite.set_animation_state('stab')
+			sprite.set_state('slash')
 		State.recovering:
-			sprite.set_animation_state('stab_recover')
+			sprite.set_state('slash_recover')
 		State.sliding:
-			sprite.set_animation_state('stance')
+			sprite.set_state('stance')
+	
 	
 func _process_state(delta : float) -> void:
 	match state:
 		State.ready:
-			pass
-				
+			pass			
 		State.charging:
 			charge_timer += delta	
 			if charge_timer >= charge_timer_max:
 				charge_timer = charge_timer_max 
-				release()	
-					
+				release()				
 			elif charge_marked_for_release:
-				release()
-				
-			sprite.flip_h = facing_direction > 0
-			
+				release()			
+			sprite.flip_h = facing_direction > 0	
 		State.attacking:
 			pass	
-			
 		State.recovering:
 			cooldown_timer -= delta
 			if cooldown_timer <= 0:
 				ready()		
-			
 		State.sliding:	 
 			if velocity.x == 0:
 				state = State.ready
-
-
-
 
 func jump() -> bool:
 	if coyote_timer >= coyote_period:
 		return false
 	elif state == State.dead:
 		return false
-
 	coyote_timer = coyote_period
 	sap(10)
 	velocity.y = -sqrt(jump_height * 1960)
 	jumped.emit()
 	return true
 	
-
 func duck() -> bool:
 	duck_debounce = 0.0
 	return false
-	
 	
 func charge() -> bool:
 	if state == State.ready:
 		state = State.charging
 		cooldown_timer = 0.0
 		charge_timer = 0.0
-		return true
-		
+		return true	
 	else:
 		return false
-
 	
 func release() -> bool:
 	if not state == State.charging:
@@ -201,14 +192,12 @@ func release() -> bool:
 		shove(impulse)
 		return true
 
-
 func recover() -> bool:
 	if state == State.attacking:
 		state = State.recovering
 		return true
 	else:
 		return false
-
 
 func ready() -> bool:
 	if state == State.recovering:
@@ -218,24 +207,19 @@ func ready() -> bool:
 	else:
 		return false
 	
-
 func _handle_hit(guy : CharacterBody2D):
 	var power = sqrt(charge_timer/charge_timer_max) * 120
 	var impulse = Vector2(facing_direction, 0) * power
 	guy.shove(impulse)
 	guy.damage(charge_timer/charge_timer_max * 100)
 	
-	
 func _handle_parry(guy : CharacterBody2D):
 	var impulse = Vector2(facing_direction, 0) * 72
 	guy.shove(impulse)
 
-
-func _handle_animation_finished(state_name):
-	
+func _handle_animation_finished():
 	if state == State.attacking:
-		recover()
-		
+		recover()	
 		
 func check_sprite_collision(coordinates : Vector2, bounds : Vector2, offset : Vector2 = Vector2.ZERO) -> bool:
 	var disposition : Vector2 = coordinates - global_position
@@ -247,43 +231,30 @@ func check_sprite_collision(coordinates : Vector2, bounds : Vector2, offset : Ve
 			bound_coord.x = x
 			pixel_coord = disposition + bound_coord + offset
 			if sprite.is_pixel_opaque(pixel_coord):
-				return true
-		
+				return true	
 	return false
 
-	
 func shove(impulse : Vector2) -> void:
 	if sign(velocity.x) == sign(impulse.x):
 		velocity.x += impulse.x
 	else:
 		velocity.x = impulse.x
-		
-	#if sign(velocity.y) == sign(impulse.y):
-		#velocity.y += impulse.y
-	#else:
-		#velocity.y = impulse.y
-	
-	
-	
+			
 func damage(value : int) -> void:
 	HP -= value
 	if HP <= 0:
 		died.emit()
 		state = State.dead
 
-
 func is_facing(object : Node2D) -> bool:
 	var disposition = object.global_position - global_position
 	return sign(disposition.x) == sign(facing_direction)
 	
-	
 func turn_toward(object : Node2D):
 	if left_right != 0:
-		return
-		
+		return	
 	var x_disposition = object.global_position.x - global_position.x
 	facing_direction = sign(x_disposition)
-	
 	
 func sap(value : float):
 	if Energy <= 0:
@@ -295,11 +266,9 @@ func sap(value : float):
 	else:
 		Energy -= value
 
-
 func interact():
 	var interactable_bodies = hurtbox.get_overlapping_bodies()
-	for body in interactable_bodies:
-		
+	for body in interactable_bodies:	
 		if body.collision_layer & 512 >= 1:
 			body.use(self)
 			return

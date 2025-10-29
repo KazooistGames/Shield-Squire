@@ -19,8 +19,7 @@ script = ExtResource("2_texl7")
 sprite_sheet = ExtResource("1_ogbdo")
 texture_size = Vector2i(36, 24)
 playing = true
-frames_per_second = 18
-frame_timer = 0.05
+frames_per_second = 48
 first_frame_index = 4
 last_frame_index = 10
 current_frame_index = 9
@@ -32,17 +31,17 @@ hurtbox_radius = 4.0
 hurtbox_height = 20.0
 hurtbox_positions = Array[Vector2]([Vector2(3, 1), Vector2(2, 1), Vector2(1, 1), Vector2(1, 1), Vector2(2, 1)])
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="hitBox" type="Area2D" parent="."]
 input_pickable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitBox"]
 position = Vector2(-12, -3.5)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_drk25")
 debug_color = Color(0.982366, 0.029952, 0.33587, 0.42)
 
-[node name="hurtbox" type="Area2D" parent="."]
+[node name="hurtBox" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
 position = Vector2(2, 1)
 shape = SubResource("CapsuleShape2D_1jq7i")

@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgbmicstbteog"]
+[gd_scene load_steps=5 format=3 uid="uid://cgbmicstbteog"]
 
 [ext_resource type="PackedScene" uid="uid://cmigagy8anvbt" path="res://Scenes/Wallpaper/wallpaper.tscn" id="1_ax32a"]
 [ext_resource type="PackedScene" uid="uid://db5fff6v2i5p7" path="res://Scenes/Guy/Archetypes/Swordsman/Swordsman.tscn" id="2_quvj1"]
 [ext_resource type="PackedScene" uid="uid://cvoldq46v0xyn" path="res://Scenes/HMI/HMI.tscn" id="3_quvj1"]
 [ext_resource type="PackedScene" uid="uid://6g65nfclhdfm" path="res://Scenes/Foliage/Tree.tscn" id="5_rg4ux"]
-[ext_resource type="PackedScene" uid="uid://ue3w37js046f" path="res://Scenes/Guy/Archetypes/Squire/Squire.tscn" id="5_yytgh"]
 
 [node name="Title" type="Node2D"]
 
@@ -15,9 +14,6 @@ color = Color(0.881937, 0.881937, 0.881936, 1)
 
 [node name="Hmi" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_quvj1")]
 player = NodePath("../Swordsman")
-
-[node name="squire3" parent="." instance=ExtResource("5_yytgh")]
-position = Vector2(-220, 61.496)
 
 [node name="Swordsman" parent="." instance=ExtResource("2_quvj1")]
 position = Vector2(16.4952, 61.424)
@@ -33,15 +29,3 @@ position = Vector2(50, 60)
 
 [node name="Tree4" parent="." instance=ExtResource("5_rg4ux")]
 position = Vector2(150, 60)
-
-[node name="Swordsman2" parent="." instance=ExtResource("2_quvj1")]
-position = Vector2(200, 61.4866)
-
-[node name="Swordsman3" parent="." instance=ExtResource("2_quvj1")]
-position = Vector2(200, 61.4866)
-
-[node name="Squire" parent="." instance=ExtResource("5_yytgh")]
-position = Vector2(-113, 61.4975)
-
-[node name="Squire2" parent="." instance=ExtResource("5_yytgh")]
-position = Vector2(-71, 61.4953)

@@ -17,6 +17,12 @@ shape = SubResource("RectangleShape2D_rcyd8")
 debug_color = Color(0.307455, 0.627115, 0, 0.42)
 
 [node name="FightingFrames" parent="." instance=ExtResource("2_rd74a")]
-region_rect = Rect2(288, 0, 36, 24)
-frame_timer = 0.0111111
-current_frame_index = 8
+region_rect = Rect2(252, 0, 36, 24)
+current_frame_index = 7
+
+[node name="Label" type="Label" parent="."]
+offset_left = -15.0
+offset_top = -30.0
+offset_right = 22.33
+offset_bottom = -7.0
+text = "Guy"
